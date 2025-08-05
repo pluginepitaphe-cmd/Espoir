@@ -1,0 +1,79 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import { NotificationProvider } from './components/notifications/NotificationSystem';
+import { PackageLimitProvider } from './contexts/PackageLimitContext';
+import Layout from './components/layout/Layout';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import AdminValidationPage from './pages/AdminValidationPage';
+import AdminDashboardPage from './pages/AdminDashboardPage';
+import AnalyticsDashboard from './pages/AnalyticsDashboard';
+import VisitorPackagesPage from './pages/VisitorPackagesPage';
+import PartnershipPackagesPage from './pages/PartnershipPackagesPage';
+import AdvancedMatchingSystem from './pages/AdvancedMatchingSystem';
+import ExhibitorDashboard from './pages/ExhibitorDashboard';
+import DashboardPage from './pages/DashboardPage';
+import ProductManagement from './pages/ProductManagement';
+import MiniSiteEditor from './pages/MiniSiteEditor';
+import MiniSitePreview from './pages/MiniSitePreview';
+import AppointmentCalendar from './pages/AppointmentCalendar';
+import ExhibitorDirectory from './pages/ExhibitorDirectory';
+import ExhibitorMiniSite from './pages/ExhibitorMiniSite';
+import ExhibitorProfilePage from './pages/ExhibitorProfilePage';
+import NetworkingPage from './pages/NetworkingPage';
+import MessagesPage from './pages/MessagesPage';
+import ContactPage from './pages/ContactPage';
+import PartnersPage from './pages/PartnersPage';
+import PartnerMiniSite from './pages/PartnerMiniSite';
+import './App.css';
+
+function App() {
+  return (
+    <AuthProvider>
+      <PackageLimitProvider>
+        <NotificationProvider>
+          <Router>
+            <Routes>
+              {/* Routes sans layout pour l'authentification */}
+              <Route path="/connexion" element={<LoginPage />} />
+              <Route path="/inscription" element={<RegisterPage />} />
+              <Route path="/exposants/:id" element={<ExhibitorProfilePage />} />
+              
+              {/* Route mini-site public sans layout */}
+              <Route path="/mini-site/preview/:companyId?" element={<MiniSitePreview />} />
+              
+              {/* Route tableau de bord admin sans layout */}
+              <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
+              <Route path="/analytics" element={<AnalyticsDashboard />} />
+              <Route path="/forfaits-visiteur" element={<VisitorPackagesPage />} />
+              <Route path="/partenaires/forfaits" element={<PartnershipPackagesPage />} />
+              <Route path="/matching" element={<AdvancedMatchingSystem />} />
+              
+              {/* Routes avec layout */}
+              <Route element={<Layout />}>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/exposants" element={<ExhibitorDirectory />} />
+                <Route path="/partenaires" element={<PartnersPage />} />
+                <Route path="/partenaires/:id" element={<PartnerMiniSite />} />
+                <Route path="/calendrier" element={<AppointmentCalendar />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/reseautage" element={<NetworkingPage />} />
+                <Route path="/messages" element={<MessagesPage />} />
+                <Route path="/dashboard" element={<ExhibitorDashboard />} />
+                <Route path="/dashboard-advanced" element={<DashboardPage />} />
+                <Route path="/products" element={<ProductManagement />} />
+                <Route path="/mini-site" element={<MiniSiteEditor />} />
+                <Route path="/admin/validation" element={<AdminValidationPage />} />
+              </Route>
+            </Routes>
+          </Router>
+        </NotificationProvider>
+      </PackageLimitProvider>
+    </AuthProvider>
+  );
+}
+
+export default App;
+
