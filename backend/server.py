@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 from fastapi import FastAPI, HTTPException, Depends, Request
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from typing import List, Optional
@@ -23,6 +23,9 @@ from pathlib import Path
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import logging
+
+# Import chatbot service
+from chatbot_service import siports_ai_service, ChatRequest, ChatResponse
 
 # Configure logging
 logger = logging.getLogger(__name__)
