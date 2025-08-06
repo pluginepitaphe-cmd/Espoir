@@ -50,7 +50,7 @@ const WordPressApp = ({ container, component, config }) => {
       user,
       apiConfig: {
         ...apiConfig,
-        apiUrl: apiConfig.apiUrl || 'https://ec48b228-5fe8-445c-98da-33775eea8a9d.preview.emergentagent.com/api'
+        apiUrl: apiConfig.apiUrl || 'https://3af9f13b-c7da-4bc1-b1f4-89ae2ae52faa.preview.emergentagent.com/api'
       }
     };
 

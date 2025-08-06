@@ -24,13 +24,13 @@ class WordPressConfig(BaseSettings):
     
     # Configuration SIPORTS
     wordpress_url: str = os.getenv("WORDPRESS_URL", "https://siportevent.com")
-    siports_api_url: str = os.getenv("SIPORTS_API_URL", "https://ec48b228-5fe8-445c-98da-33775eea8a9d.preview.emergentagent.com")
+    siports_api_url: str = os.getenv("SIPORTS_API_URL", "https://3af9f13b-c7da-4bc1-b1f4-89ae2ae52faa.preview.emergentagent.com")
     
     # Configuration CORS
     cors_origins: List[str] = [
         "https://siportevent.com",
         "https://www.siportevent.com",
-        "https://ec48b228-5fe8-445c-98da-33775eea8a9d.preview.emergentagent.com",
+        "https://3af9f13b-c7da-4bc1-b1f4-89ae2ae52faa.preview.emergentagent.com",
         "http://localhost:3000",
         "http://localhost:8000",
         "http://127.0.0.1:3000"

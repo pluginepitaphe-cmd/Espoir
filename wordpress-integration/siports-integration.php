@@ -18,7 +18,7 @@ class SiportsIntegration {
     public function __construct() {
         $this->plugin_url = plugin_dir_url(__FILE__);
         $this->plugin_path = plugin_dir_path(__FILE__);
-        $this->api_url = get_option('siports_api_url', 'https://ec48b228-5fe8-445c-98da-33775eea8a9d.preview.emergentagent.com/api');
+        $this->api_url = get_option('siports_api_url', 'https://3af9f13b-c7da-4bc1-b1f4-89ae2ae52faa.preview.emergentagent.com/api');
         
         add_action('init', array($this, 'init'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
@@ -104,7 +104,7 @@ class SiportsIntegration {
                     <tr>
                         <th scope="row">URL API SIPORTS</th>
                         <td>
-                            <input type="url" name="siports_api_url" value="<?php echo esc_attr(get_option('siports_api_url', 'https://ec48b228-5fe8-445c-98da-33775eea8a9d.preview.emergentagent.com/api')); ?>" class="regular-text" />
+                            <input type="url" name="siports_api_url" value="<?php echo esc_attr(get_option('siports_api_url', 'https://3af9f13b-c7da-4bc1-b1f4-89ae2ae52faa.preview.emergentagent.com/api')); ?>" class="regular-text" />
                             <p class="description">URL de l'API SIPORTS (sans /api à la fin)</p>
                         </td>
                     </tr>
@@ -516,7 +516,7 @@ new SiportsIntegration();
 // Hook d'activation
 register_activation_hook(__FILE__, function() {
     // Créer les options par défaut
-    add_option('siports_api_url', 'https://ec48b228-5fe8-445c-98da-33775eea8a9d.preview.emergentagent.com/api');
+    add_option('siports_api_url', 'https://3af9f13b-c7da-4bc1-b1f4-89ae2ae52faa.preview.emergentagent.com/api');
     add_option('siports_jwt_secret', wp_generate_password(32, false));
     add_option('siports_auto_sync', 0);
     
