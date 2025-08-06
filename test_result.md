@@ -354,10 +354,12 @@ prochaines_etapes:
   - "✅ TERMINÉ: Page profil exposant détaillée"
   - "✅ TERMINÉ: Système de messagerie fonctionnel"
   - "✅ TERMINÉ: Toutes les corrections de bugs boutons"
-  - "Implémenter la synchronisation WordPress"
-  - "Configurer l'API REST WordPress"
-  - "Créer les hooks de synchronisation de données"
-  - "Tester la synchronisation bidirectionnelle"
+  - "✅ TERMINÉ: Intégration WordPress complète"
+  - "🚀 EN COURS: SIPORTS v2.0 - Chatbot IA gratuit avec Ollama"
+  - "Installer et configurer Ollama localement"
+  - "Implémenter les endpoints FastAPI pour chatbot"
+  - "Créer interface chat frontend React"
+  - "Tester les modèles IA gratuits (TinyLlama, Gemma2)"
 
 nouvelles_fonctionnalites_implementees:
   analytics_dashboard:
