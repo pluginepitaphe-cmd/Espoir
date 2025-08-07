@@ -68,6 +68,7 @@ function App() {
                 <Route path="/products" element={<ProductManagement />} />
                 <Route path="/mini-site" element={<MiniSiteEditor />} />
                 <Route path="/admin/validation" element={<AdminValidationPage />} />
+                <Route path="/chatbot-test" element={<ChatbotTestPage />} />
               </Route>
             </Routes>
             
