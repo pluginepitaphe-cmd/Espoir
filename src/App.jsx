@@ -4,6 +4,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { NotificationProvider } from './components/notifications/NotificationSystem';
 import { PackageLimitProvider } from './contexts/PackageLimitContext';
 import Layout from './components/layout/Layout';
+import SiportsChatbot from './components/ai/SiportsChatbot';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
