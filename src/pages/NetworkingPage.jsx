@@ -37,7 +37,7 @@ const NetworkingPage = () => {
   });
 
   // Données simulées pour les participants
-  const participants = [
+  const [participants, setParticipants] = useState([
     {
       id: 1,
       type: 'exposant',
@@ -106,7 +106,7 @@ const NetworkingPage = () => {
       isConnected: false,
       isFavorite: false
     }
-  ];
+  ]);
 
   const [filteredParticipants, setFilteredParticipants] = useState(participants);
   const [favorites, setFavorites] = useState([]);
