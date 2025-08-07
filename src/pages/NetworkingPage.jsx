@@ -80,7 +80,6 @@ const NetworkingPage = () => {
         profileViews: 189,
         connections: 156
       },
-      isConnected: true,
       isFavorite: true
     },
     {
