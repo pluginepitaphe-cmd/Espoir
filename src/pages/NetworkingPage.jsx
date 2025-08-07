@@ -140,24 +140,17 @@ const NetworkingPage = () => {
   };
 
   const handleSendConnectionRequest = (participantId) => {
-    // Ajouter vraiment la connexion
+    // Ajouter la connexion
     setConnections(prev => [...prev, participantId]);
     
-    // Mettre à jour le statut de connexion du participant
-    const updatedParticipants = participants.map(p => 
-      p.id === participantId ? { ...p, isConnected: true } : p
+    // Mettre à jour le statut de connexion du participant dans l'état participants
+    setParticipants(prevParticipants => 
+      prevParticipants.map(p => 
+        p.id === participantId ? { ...p, isConnected: true } : p
+      )
     );
-    setFilteredParticipants(updatedParticipants.filter(participant => {
-      const matchesSearch = participant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           participant.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           participant.sector.toLowerCase().includes(searchTerm.toLowerCase());
-      
-      const matchesType = selectedFilters.type === 'all' || participant.type === selectedFilters.type;
-      const matchesSector = selectedFilters.sector === 'all' || participant.sector === selectedFilters.sector;
-      
-      return matchesSearch && matchesType && matchesSector;
-    }));
     
+    // Notification de succès
     alert('Connexion établie avec succès ! Vous pouvez maintenant envoyer des messages.');
   };
 
