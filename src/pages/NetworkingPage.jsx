@@ -193,10 +193,6 @@ const NetworkingPage = () => {
     // Rediriger vers le calendrier
     navigate(`/calendrier?participant=${participantId}`);
   };
-    // Rediriger vers la planification de rendez-vous avec React Router
-    const participant = participants.find(p => p.id === participantId);
-    navigate(`/calendrier?participant=${participantId}&name=${encodeURIComponent(participant.name)}`);
-  };
 
   const tabs = [
     { id: 'directory', label: 'Annuaire', icon: Users },
