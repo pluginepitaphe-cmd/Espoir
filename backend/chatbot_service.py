@@ -219,7 +219,7 @@ class SiportsAIService:
             logger.error(f"Erreur génération réponse chatbot: {str(e)}")
             return ChatResponse(
                 response="Désolé, je rencontre une difficulté technique. Pouvez-vous reformuler votre question ?",
-                response_type=request.context_type.value,
+                response_type=request.context_type.value if hasattr(request.context_type, 'value') else request.context_type,
                 confidence=0.0,
                 suggested_actions=["🔄 Réessayer", "📞 Contact support"],
                 session_id=session_id or "error_session"
