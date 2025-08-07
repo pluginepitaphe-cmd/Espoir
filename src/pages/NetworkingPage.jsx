@@ -108,13 +108,13 @@ const NetworkingPage = () => {
     }
   ]);
 
-  const [filteredParticipants, setFilteredParticipants] = useState(participants);
+  const [filteredParticipants, setFilteredParticipants] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [connections, setConnections] = useState([]);
 
   useEffect(() => {
     filterParticipants();
-  }, [searchTerm, selectedFilters]);
+  }, [searchTerm, selectedFilters, participants]); // Ajouter participants dans les dépendances
 
   const filterParticipants = () => {
     let filtered = participants.filter(participant => {
