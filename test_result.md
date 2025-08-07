@@ -362,6 +362,19 @@ prochaines_etapes:
   - "Configuration Ollama pour modèles IA locaux en production"
   - "Intégration chatbot dans interface utilisateur SIPORTS"
 
+  🆕 chatbot_ia_siports_v2:
+    - "Chatbot IA gratuit avec mode simulation intelligente"
+    - "Service backend avec 9 endpoints API fonctionnels (100% tests réussis)"
+    - "Réponses contextuelles spécialisées (général, exposants, forfaits, événements)"
+    - "Base de connaissances SIPORTS intégrée (forfaits, exposants, programme)"
+    - "Interface React moderne avec bouton flottant"
+    - "Support sessions conversation et historique"
+    - "4 contextes spécialisés avec changement dynamique"
+    - "Actions suggérées et scores de confiance"
+    - "Architecture prête pour intégration Ollama production"
+    - "Tests frontend réussis - interface complètement fonctionnelle"
+    url: "/chatbot-test"
+
 nouvelles_fonctionnalites_implementees:
   🆕 chatbot_ia_siports_v2:
     - "Chatbot IA gratuit avec service SiportsAIService"
