@@ -357,11 +357,12 @@ prochaines_etapes:
   - "✅ TERMINÉ: Système de messagerie fonctionnel"
   - "✅ TERMINÉ: Toutes les corrections de bugs boutons"
   - "✅ TERMINÉ: Intégration WordPress complète"
-  - "🚀 EN COURS: SIPORTS v2.0 - Chatbot IA gratuit avec Ollama"
-  - "Installer et configurer Ollama localement"
-  - "Implémenter les endpoints FastAPI pour chatbot"
-  - "Créer interface chat frontend React"
-  - "Tester les modèles IA gratuits (TinyLlama, Gemma2)"
+  - "✅ TERMINÉ: SIPORTS v2.0 - Chatbot IA gratuit avec 9 endpoints"
+  - "✅ TERMINÉ: Service chatbot avec mode mock et support Ollama"
+  - "✅ TERMINÉ: Tests complets chatbot (100% success rate)"
+  - "Déploiement interface frontend chatbot React"
+  - "Configuration Ollama pour modèles IA locaux en production"
+  - "Intégration chatbot dans interface utilisateur SIPORTS"
 
 nouvelles_fonctionnalites_implementees:
   🆕 chatbot_ia_siports_v2:
