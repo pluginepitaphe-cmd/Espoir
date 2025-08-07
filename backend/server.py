@@ -1173,6 +1173,161 @@ async def book_b2b_meeting(current_user: int = Depends(get_current_user)):
     
     return {"message": "RDV B2B réservé avec succès"}
 
+# =============================================================================
+# SIPORTS v2.0 - AI CHATBOT ENDPOINTS
+# =============================================================================
+
+@app.post("/api/chat", response_model=ChatResponse)
+async def chat_endpoint(request: ChatRequest):
+    """
+    Endpoint principal du chatbot IA SIPORTS v2.0
+    Assistance intelligente pour événements maritimes
+    """
+    try:
+        response = await siports_ai_service.generate_response(request)
+        logger.info(f"Chatbot response generated successfully for context: {request.context_type}")
+        return response
+        
+    except Exception as e:
+        logger.error(f"Erreur endpoint chatbot: {str(e)}")
+        raise HTTPException(status_code=500, detail="Erreur interne du chatbot")
+
+@app.post("/api/chat/exhibitor", response_model=ChatResponse)
+async def exhibitor_chat_endpoint(request: ChatRequest):
+    """
+    Endpoint spécialisé pour recommandations exposants
+    """
+    request.context_type = "exhibitor"
+    return await chat_endpoint(request)
+
+@app.post("/api/chat/package", response_model=ChatResponse) 
+async def package_chat_endpoint(request: ChatRequest):
+    """
+    Endpoint spécialisé pour suggestions de forfaits
+    """
+    request.context_type = "package"
+    return await chat_endpoint(request)
+
+@app.post("/api/chat/event", response_model=ChatResponse)
+async def event_chat_endpoint(request: ChatRequest):
+    """
+    Endpoint spécialisé pour informations événements
+    """
+    request.context_type = "event"
+    return await chat_endpoint(request)
+
+@app.get("/api/chat/history/{session_id}")
+async def get_chat_history(session_id: str):
+    """
+    Récupère l'historique d'une session de chat
+    """
+    try:
+        history = siports_ai_service.get_conversation_history(session_id)
+        return {"session_id": session_id, "history": history}
+    except Exception as e:
+        logger.error(f"Erreur récupération historique: {str(e)}")
+        raise HTTPException(status_code=500, detail="Erreur récupération historique")
+
+@app.delete("/api/chat/history/{session_id}")
+async def clear_chat_history(session_id: str):
+    """
+    Efface l'historique d'une session de chat
+    """
+    try:
+        success = siports_ai_service.clear_conversation_history(session_id)
+        if success:
+            return {"message": "Historique effacé avec succès"}
+        else:
+            return {"message": "Session non trouvée"}
+    except Exception as e:
+        logger.error(f"Erreur effacement historique: {str(e)}")
+        raise HTTPException(status_code=500, detail="Erreur effacement historique")
+
+@app.post("/api/chat/stream")
+async def streaming_chat_endpoint(request: ChatRequest):
+    """
+    Endpoint streaming pour réponses temps réel
+    """
+    async def generate_stream():
+        try:
+            # Générer la réponse normale
+            response = await siports_ai_service.generate_response(request)
+            
+            # Simuler le streaming en envoyant la réponse par chunks
+            words = response.response.split()
+            for i, word in enumerate(words):
+                chunk_data = {
+                    "chunk": word + " ",
+                    "session_id": response.session_id,
+                    "is_final": i == len(words) - 1
+                }
+                yield f"data: {json.dumps(chunk_data)}\n\n"
+                
+                # Petite pause pour simuler le streaming
+                import asyncio
+                await asyncio.sleep(0.05)
+                
+        except Exception as e:
+            error_chunk = {"error": str(e), "is_final": True}
+            yield f"data: {json.dumps(error_chunk)}\n\n"
+    
+    return StreamingResponse(
+        generate_stream(),
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "Connection": "keep-alive"}
+    )
+
+@app.get("/api/chatbot/health")
+async def chatbot_health_check():
+    """
+    Vérification de santé du service chatbot
+    """
+    try:
+        # Test simple du service
+        test_request = ChatRequest(message="test health", context_type="general")
+        response = await siports_ai_service.generate_response(test_request)
+        
+        return {
+            "status": "healthy",
+            "service": "siports-ai-chatbot",
+            "version": "2.0.0",
+            "mock_mode": siports_ai_service.mock_mode,
+            "model": siports_ai_service.model_name,
+            "test_response_length": len(response.response),
+            "active_sessions": len(siports_ai_service.conversation_history)
+        }
+    except Exception as e:
+        logger.error(f"Health check chatbot failed: {str(e)}")
+        return {
+            "status": "unhealthy",
+            "error": str(e),
+            "service": "siports-ai-chatbot"
+        }
+
+@app.get("/api/chatbot/stats")
+async def chatbot_statistics():
+    """
+    Statistiques du chatbot
+    """
+    try:
+        active_sessions = len(siports_ai_service.conversation_history)
+        total_messages = sum(len(history) for history in siports_ai_service.conversation_history.values())
+        
+        return {
+            "active_sessions": active_sessions,
+            "total_messages": total_messages,
+            "service_mode": "mock" if siports_ai_service.mock_mode else "ollama",
+            "model_name": siports_ai_service.model_name,
+            "uptime": "Service active"
+        }
+    except Exception as e:
+        logger.error(f"Erreur statistiques chatbot: {str(e)}")
+        raise HTTPException(status_code=500, detail="Erreur récupération statistiques")
+
+# =============================================================================
+# END AI CHATBOT ENDPOINTS  
+# =============================================================================
+
 # Initialize database on startup
 @app.on_event("startup")
 async def startup_event():
