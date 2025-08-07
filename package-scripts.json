@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy:railway": "./deploy-railway.sh",
+    "deploy:vercel": "./deploy-vercel.sh",
+    "deploy:full": "./deploy-railway.sh && ./deploy-vercel.sh",
+    "test:deployment": "./test-deployment.sh",
+    "logs:railway": "cd backend && railway logs",
+    "logs:vercel": "vercel logs",
+    "status:railway": "cd backend && railway status",
+    "status:vercel": "vercel ls"
+  }
+}
