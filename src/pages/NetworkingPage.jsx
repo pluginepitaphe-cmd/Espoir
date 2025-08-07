@@ -110,7 +110,6 @@ const NetworkingPage = () => {
 
   const [filteredParticipants, setFilteredParticipants] = useState([]);
   const [favorites, setFavorites] = useState([]);
-  const [connections, setConnections] = useState([]);
 
   useEffect(() => {
     filterParticipants();
