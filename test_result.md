@@ -364,6 +364,28 @@ prochaines_etapes:
   - "Tester les modèles IA gratuits (TinyLlama, Gemma2)"
 
 nouvelles_fonctionnalites_implementees:
+  🆕 chatbot_ia_siports_v2:
+    - "Chatbot IA gratuit avec service SiportsAIService"
+    - "9 endpoints chatbot complets: principal, spécialisés, historique, streaming, health, stats"
+    - "Réponses contextuelles intelligentes (general, exhibitor, package, event)"
+    - "Base de connaissances SIPORTS intégrée (forfaits, exposants, événements)"
+    - "Mode simulation mock pour développement + support Ollama production"
+    - "Gestion sessions conversation avec historique persistant"
+    - "Streaming temps réel avec Server-Sent Events (SSE)"
+    - "Validation erreurs et nettoyage automatique sessions"
+    - "Actions suggérées contextuelles et scoring confiance"
+    - "Health check et statistiques service"
+    endpoints:
+      - "POST /api/chat - Endpoint principal avec contextes multiples"
+      - "POST /api/chat/exhibitor - Recommandations exposants spécialisées"
+      - "POST /api/chat/package - Suggestions forfaits personnalisées"
+      - "POST /api/chat/event - Informations événements détaillées"
+      - "GET /api/chat/history/{session_id} - Récupération historique"
+      - "DELETE /api/chat/history/{session_id} - Effacement historique"
+      - "POST /api/chat/stream - Streaming temps réel SSE"
+      - "GET /api/chatbot/health - Health check service"
+      - "GET /api/chatbot/stats - Statistiques chatbot"
+    
   analytics_dashboard:
     - "Dashboard analytics avec graphiques en temps réel"
     - "Statistiques d'engagement avec mise à jour automatique"
