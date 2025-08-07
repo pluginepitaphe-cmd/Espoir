@@ -69,6 +69,9 @@ function App() {
                 <Route path="/admin/validation" element={<AdminValidationPage />} />
               </Route>
             </Routes>
+            
+            {/* Chatbot IA SIPORTS v2.0 - Disponible sur toutes les pages */}
+            <SiportsChatbot />
           </Router>
         </NotificationProvider>
       </PackageLimitProvider>
