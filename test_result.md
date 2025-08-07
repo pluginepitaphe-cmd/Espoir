@@ -272,14 +272,12 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Endpoint /api/auth/me manquant - cause erreurs 404 répétées" # 🚨 PROBLÈME CRITIQUE IDENTIFIÉ
-    - "Dashboard.jsx ligne 59 - erreur 'Cannot read properties of undefined (reading users)'" # ⚠️ ERREUR JAVASCRIPT
-    - "Boutons validation/rejet admin non visibles dans interface" # ❌ FONCTIONNALITÉ MANQUANTE
-    - "Menu mobile non détecté - problème responsive" # ⚠️ PROBLÈME MINEUR
-  stuck_tasks: 
-    - "Endpoint /api/auth/me manquant - cause erreurs 404 répétées" # Frontend appelle endpoint inexistant
-  test_all: true  # Tests post-intégration WordPress terminés
-  test_priority: "critical_issues_identified" # Problèmes identifiés nécessitent correction
+    - "Interface frontend chatbot React à implémenter"
+    - "Configuration Ollama pour production"
+    - "Intégration chatbot dans UI SIPORTS"
+  stuck_tasks: []
+  test_all: true
+  test_priority: "chatbot_integration_complete"
 
 agent_communication:
   - agent: "main"
