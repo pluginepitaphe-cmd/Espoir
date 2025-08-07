@@ -209,7 +209,7 @@ class SiportsAIService:
             
             return ChatResponse(
                 response=ai_response,
-                response_type=request.context_type.value,
+                response_type=request.context_type.value if hasattr(request.context_type, 'value') else request.context_type,
                 confidence=confidence,
                 suggested_actions=suggested_actions,
                 session_id=session_id
