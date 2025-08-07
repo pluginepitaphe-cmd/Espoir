@@ -139,28 +139,60 @@ const NetworkingPage = () => {
     );
   };
 
-  const handleSendConnectionRequest = (participantId) => {
-    // Ajouter la connexion
-    setConnections(prev => [...prev, participantId]);
-    
-    // Mettre à jour le statut de connexion du participant dans l'état participants
-    setParticipants(prevParticipants => 
-      prevParticipants.map(p => 
-        p.id === participantId ? { ...p, isConnected: true } : p
-      )
-    );
-    
-    // Notification de succès
-    alert('Connexion établie avec succès ! Vous pouvez maintenant envoyer des messages.');
-  };
-
   const handleSendMessage = (participantId) => {
-    // Rediriger vers une interface de messagerie avec React Router
+    if (!user) {
+      alert('Veuillez vous connecter pour accéder à la messagerie');
+      navigate('/login');
+      return;
+    }
+    
+    // Vérifier les droits selon le forfait
+    const userPackage = user.visitor_package || 'Free';
+    const allowedMessages = {
+      'Free': 0,
+      'Basic': 2, 
+      'Premium': 5,
+      'VIP': 'unlimited'
+    };
+    
+    const limit = allowedMessages[userPackage];
+    if (limit === 0) {
+      alert('Votre forfait gratuit ne permet pas l\'envoi de messages. Passez au forfait Basic pour débloquer cette fonctionnalité.');
+      navigate('/visiter/forfaits');
+      return;
+    }
+    
+    // Rediriger vers la messagerie
     const participant = participants.find(p => p.id === participantId);
     navigate(`/messages?to=${participantId}&name=${encodeURIComponent(participant.name)}`);
   };
 
   const handleScheduleMeeting = (participantId) => {
+    if (!user) {
+      alert('Veuillez vous connecter pour planifier des rendez-vous');
+      navigate('/login');
+      return;
+    }
+    
+    // Vérifier les droits selon le forfait  
+    const userPackage = user.visitor_package || 'Free';
+    const allowedMeetings = {
+      'Free': 0,
+      'Basic': 2,
+      'Premium': 5, 
+      'VIP': 'unlimited'
+    };
+    
+    const limit = allowedMeetings[userPackage];
+    if (limit === 0) {
+      alert('Votre forfait gratuit ne permet pas la planification de RDV. Passez au forfait Basic pour débloquer cette fonctionnalité.');
+      navigate('/visiter/forfaits');
+      return;
+    }
+    
+    // Rediriger vers le calendrier
+    navigate(`/calendrier?participant=${participantId}`);
+  };
     // Rediriger vers la planification de rendez-vous avec React Router
     const participant = participants.find(p => p.id === participantId);
     navigate(`/calendrier?participant=${participantId}&name=${encodeURIComponent(participant.name)}`);
