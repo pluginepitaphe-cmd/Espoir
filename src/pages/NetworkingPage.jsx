@@ -101,7 +101,6 @@ const NetworkingPage = () => {
         profileViews: 67,
         connections: 34
       },
-      isConnected: false,
       isFavorite: false
     }
   ]);
