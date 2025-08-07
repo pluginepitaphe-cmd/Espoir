@@ -349,34 +349,37 @@ const NetworkingPage = () => {
                     </div>
 
                     <div className="flex gap-2">
-                      {!participant.isConnected ? (
+                      {!user ? (
+                        // Si l'utilisateur n'est pas connecté, bouton pour se connecter
                         <Button
                           size="sm"
-                          onClick={() => handleSendConnectionRequest(participant.id)}
+                          onClick={() => navigate('/login')}
                           className="flex-1"
                         >
                           <UserPlus className="w-4 h-4 mr-1" />
                           Se connecter
                         </Button>
                       ) : (
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => handleSendMessage(participant.id)}
-                          className="flex-1"
-                        >
-                          <MessageSquare className="w-4 h-4 mr-1" />
-                          Message
-                        </Button>
+                        // Si l'utilisateur est connecté, boutons d'interaction
+                        <>
+                          <Button
+                            size="sm"
+                            onClick={() => handleSendMessage(participant.id)}
+                            className="flex-1"
+                          >
+                            <MessageSquare className="w-4 h-4 mr-1" />
+                            Message
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handleScheduleMeeting(participant.id)}
+                          >
+                            <Calendar className="w-4 h-4 mr-1" />
+                            RDV
+                          </Button>
+                        </>
                       )}
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => handleScheduleMeeting(participant.id)}
-                      >
-                        <Calendar className="w-4 h-4 mr-1" />
-                        RDV
-                      </Button>
                     </div>
                   </CardContent>
                 </Card>
