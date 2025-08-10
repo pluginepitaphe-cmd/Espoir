@@ -24,6 +24,8 @@ import AppointmentCalendar from './pages/AppointmentCalendar';
 import ExhibitorDirectory from './pages/ExhibitorDirectory';
 import ExhibitorMiniSite from './pages/ExhibitorMiniSite';
 import ExhibitorProfilePage from './pages/ExhibitorProfilePage';
+import ExhibitorProfilePremium from './pages/ExhibitorProfilePremium';
+import ExhibitorMiniSitePro from './pages/ExhibitorMiniSitePro';
 import NetworkingPage from './pages/NetworkingPage';
 import MessagesPage from './pages/MessagesPage';
 import ContactPage from './pages/ContactPage';
