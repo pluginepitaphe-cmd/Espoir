@@ -2,7 +2,7 @@
   "version": 2,
   "buildCommand": "yarn build",
   "outputDirectory": "dist",
-  "installCommand": "yarn install",
+  "installCommand": "yarn install --frozen-lockfile",
   "framework": "vite",
   "functions": {},
   "routes": [
@@ -18,6 +18,8 @@
     }
   ],
   "env": {
-    "VITE_BACKEND_URL": "https://siports-api.up.railway.app"
+    "VITE_BACKEND_URL": "https://siports-backend.up.railway.app",
+    "VITE_APP_NAME": "SIPORTS v2.0",
+    "VITE_APP_VERSION": "2.0.0"
   }
 }
