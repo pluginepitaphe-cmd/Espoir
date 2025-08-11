@@ -27,6 +27,7 @@ export default defineConfig({
       "ec48b228-5fe8-445c-98da-33775eea8a9d.preview.emergentagent.com",
       "3af9f13b-c7da-4bc1-b1f4-89ae2ae52faa.preview.emergentagent.com",
       "maritime-events.preview.emergentagent.com",
+      "4efe408b-c94a-400d-a866-c80c08ec5c16.preview.emergentagent.com",
       "localhost",
       "127.0.0.1"
     ]
