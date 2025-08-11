@@ -44,6 +44,8 @@ function App() {
               <Route path="/connexion" element={<LoginPage />} />
               <Route path="/inscription" element={<RegisterPage />} />
               <Route path="/exposants/:id" element={<ExhibitorProfilePage />} />
+              <Route path="/exposant/:id/premium" element={<ExhibitorProfilePremium />} />
+              <Route path="/exposant/:id/mini-site" element={<ExhibitorMiniSitePro />} />
               
               {/* Route mini-site public sans layout */}
               <Route path="/mini-site/preview/:companyId?" element={<MiniSitePreview />} />
