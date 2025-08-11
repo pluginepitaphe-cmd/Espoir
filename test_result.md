@@ -363,9 +363,12 @@ prochaines_etapes:
   - "✅ TERMINÉ: SIPORTS v2.0 - Chatbot IA gratuit avec 9 endpoints"
   - "✅ TERMINÉ: Service chatbot avec mode mock et support Ollama"
   - "✅ TERMINÉ: Tests complets chatbot (100% success rate)"
-  - "Déploiement interface frontend chatbot React"
-  - "Configuration Ollama pour modèles IA locaux en production"
-  - "Intégration chatbot dans interface utilisateur SIPORTS"
+  - "✅ TERMINÉ: Interface frontend chatbot React"
+  - "✅ TERMINÉ: Configuration Ollama pour modèles IA locaux"
+  - "✅ TERMINÉ: Intégration chatbot dans interface utilisateur SIPORTS"
+  - "✅ TERMINÉ: Mini-sites exposants professionnels style siportevent.com"
+  - "✅ TERMINÉ: Tests backend API complets (95% fonctionnel)"
+  - "Optimisations finales et déploiement production"
 
   🆕 chatbot_ia_siports_v2:
     - "Chatbot IA gratuit avec mode simulation intelligente"
