@@ -39,7 +39,7 @@ Copiez le dossier `wordpress-integration` sur votre serveur :
 ### 1.3 Configuration initiale
 1. Allez dans **Réglages** → **SIPORTS Config**
 2. Configurez :
-   - **URL API SIPORTS** : `https://3af9f13b-c7da-4bc1-b1f4-89ae2ae52faa.preview.emergentagent.com/api`
+   - **URL API SIPORTS** : `https://4efe408b-c94a-400d-a866-c80c08ec5c16.preview.emergentagent.com/api`
    - **Clé secrète JWT** : Générez une clé sécurisée (32 caractères)
    - **Synchronisation automatique** : ☑️ Activé
 
@@ -268,7 +268,7 @@ tar -czf siports-plugin-backup.tar.gz /wp-content/plugins/siports-integration/
 curl -X GET "https://siportevent.com/wp-json/siports/v1/status"
 
 # Test backend SIPORTS
-curl -X GET "https://3af9f13b-c7da-4bc1-b1f4-89ae2ae52faa.preview.emergentagent.com/api/sync/status"
+curl -X GET "https://4efe408b-c94a-400d-a866-c80c08ec5c16.preview.emergentagent.com/api/sync/status"
 ```
 
 ## ✅ CHECKLIST DE DÉPLOIEMENT

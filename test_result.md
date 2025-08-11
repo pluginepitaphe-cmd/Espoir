@@ -268,7 +268,7 @@ metadata:
   version: "2.0"
   test_sequence: 1
   run_ui: true
-  deployment_url: "https://3af9f13b-c7da-4bc1-b1f4-89ae2ae52faa.preview.emergentagent.com"
+  deployment_url: "https://4efe408b-c94a-400d-a866-c80c08ec5c16.preview.emergentagent.com"
 
 test_plan:
   current_focus:
