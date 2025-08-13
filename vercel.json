@@ -4,7 +4,6 @@
   "outputDirectory": "dist",
   "installCommand": "yarn install --frozen-lockfile",
   "framework": "vite",
-  "functions": {},
   "routes": [
     {
       "src": "/assets/(.*)",
