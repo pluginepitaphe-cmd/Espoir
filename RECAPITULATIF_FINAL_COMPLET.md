@@ -305,8 +305,8 @@ cp /app/backend/siports.db /backup/
 - **🚀 Production-ready** : Scripts de déploiement automatisés
 
 ### 🔗 **Accès Rapide**
-- **Application** : https://4efe408b-c94a-400d-a866-c80c08ec5c16.preview.emergentagent.com
-- **Admin** : https://4efe408b-c94a-400d-a866-c80c08ec5c16.preview.emergentagent.com/admin/dashboard
+- **Application** : https://maritime-app.preview.emergentagent.com
+- **Admin** : https://maritime-app.preview.emergentagent.com/admin/dashboard
 - **WordPress Package** : `/app/wordpress-integration/siports-wordpress-integration-*.tar.gz`
 - **Sauvegarde Complète** : `/app/SIPORTS_COMPLET_GOOGLE_DRIVE.tar.gz`
 

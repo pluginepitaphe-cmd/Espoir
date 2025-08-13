@@ -18,7 +18,7 @@ from datetime import datetime
 from typing import Dict, List, Any
 
 # Configuration - Using the deployment URL from test_result.md
-BACKEND_URL = "https://4efe408b-c94a-400d-a866-c80c08ec5c16.preview.emergentagent.com/api"
+BACKEND_URL = "https://maritime-app.preview.emergentagent.com/api"
 
 # Test credentials from test_result.md
 TEST_ACCOUNTS = {
