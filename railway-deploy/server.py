@@ -614,4 +614,17 @@ async def startup_event():
 if __name__ == "__main__":
     import uvicorn
     port = int(os.environ.get("PORT", 8000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    log_level = os.environ.get("LOG_LEVEL", "info").lower()
+
+    if os.environ.get("ENVIRONMENT") == "production":
+        # En production, utiliser gunicorn (configuré dans railway.toml)
+        print("Production mode: use gunicorn with railway.toml configuration")
+    else:
+        # Mode développement local
+        uvicorn.run(
+            app,
+            host="0.0.0.0",
+            port=port,
+            log_level=log_level,
+            reload=False
+        )
