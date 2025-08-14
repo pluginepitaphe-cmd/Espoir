@@ -588,15 +588,17 @@ async def health_check():
         "service": "siports-api",
         "version": "2.0.0",
         "timestamp": datetime.now().isoformat(),
+        "database_type": "postgresql" if is_postgresql() else "sqlite",
         "checks": {}
     }
 
     # Vérification base de données
     try:
-        conn = sqlite3.connect(DATABASE_URL)
-        conn.execute("SELECT 1")
-        conn.close()
-        health_status["checks"]["database"] = "healthy"
+        if test_connection():
+            health_status["checks"]["database"] = "healthy"
+        else:
+            health_status["checks"]["database"] = "unhealthy: connection failed"
+            health_status["status"] = "unhealthy"
     except Exception as e:
         health_status["checks"]["database"] = f"unhealthy: {str(e)}"
         health_status["status"] = "unhealthy"
