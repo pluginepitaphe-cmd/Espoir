@@ -25,6 +25,9 @@ import logging
 # Import chatbot service
 from chatbot_service import siports_ai_service, ChatRequest, ChatResponse
 
+# Import database module
+from database import init_database, test_connection, get_user_by_email, is_postgresql
+
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
