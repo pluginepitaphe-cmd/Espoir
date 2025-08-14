@@ -579,8 +579,26 @@ async def root():
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint"""
-    return {"status": "healthy", "service": "siports-api", "version": "2.0.0"}
+    """Health check complet avec vérifications des dépendances"""
+    health_status = {
+        "status": "healthy",
+        "service": "siports-api",
+        "version": "2.0.0",
+        "timestamp": datetime.now().isoformat(),
+        "checks": {}
+    }
+
+    # Vérification base de données
+    try:
+        conn = sqlite3.connect(DATABASE_URL)
+        conn.execute("SELECT 1")
+        conn.close()
+        health_status["checks"]["database"] = "healthy"
+    except Exception as e:
+        health_status["checks"]["database"] = f"unhealthy: {str(e)}"
+        health_status["status"] = "unhealthy"
+
+    return health_status
 
 # =============================================================================
 # STARTUP EVENT
