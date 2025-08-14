@@ -2,14 +2,11 @@
 builder = "nixpacks"
 
 [deploy]
-startCommand = "python server.py"
+startCommand = "gunicorn -w 4 -k uvicorn.workers.UvicornWorker server:app --bind 0.0.0.0:$PORT --timeout 300"
 restartPolicyType = "ON_FAILURE"
-restartPolicyMaxRetries = 10
+restartPolicyMaxRetries = 3
+healthcheckPath = "/health"
+healthcheckTimeout = 300
 
 [[services]]
 name = "siports-backend"
-
-[services.variables]
-PORT = "8000"
-JWT_SECRET_KEY = "siports-jwt-secret-key-2024-production"
-DATABASE_URL = "instance/siports_production.db"
