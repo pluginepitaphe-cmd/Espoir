@@ -209,23 +209,20 @@ async def register(user: UserRegister):
 async def login(user: UserLogin):
     """User login"""
     try:
-        conn = sqlite3.connect(DATABASE_URL)
-        conn.row_factory = sqlite3.Row
+        # Utiliser le nouveau module database
+        db_user = get_user_by_email(user.email)
         
-        db_user = conn.execute(
-            'SELECT * FROM users WHERE email = ?',
-            (user.email,)
-        ).fetchone()
-        conn.close()
-        
-        if not db_user or not check_password_hash(db_user['password_hash'], user.password):
+        if not db_user or not check_password_hash(db_user[1], user.password):  # db_user[1] = password_hash
             raise HTTPException(status_code=401, detail="Identifiants invalides")
         
-        if db_user['status'] != 'validated':
-            raise HTTPException(status_code=403, detail="Compte en attente de validation")
-        
         # Create JWT token
-        user_data = dict(db_user)
+        user_data = {
+            "id": db_user[0],
+            "email": user.email,
+            "user_type": db_user[2],
+            "first_name": db_user[3],
+            "last_name": db_user[4]
+        }
         token = create_jwt_token(user_data)
         
         # Return user data with token
