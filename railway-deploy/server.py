@@ -34,7 +34,7 @@ logger = logging.getLogger(__name__)
 
 # Configuration
 JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY', secrets.token_hex(32))
-DATABASE_URL = os.environ.get('DATABASE_URL', 'instance/siports_production.db')
+DATABASE_URL = os.environ.get('DATABASE_URL', 'sqlite:///instance/siports_production.db')
 
 # FastAPI app
 app = FastAPI(
