@@ -56,56 +56,6 @@ app.add_middleware(
 security = HTTPBearer()
 
 # Database initialization
-def init_database():
-    """Initialize production database"""
-    os.makedirs('instance', exist_ok=True)
-    conn = sqlite3.connect(DATABASE_URL)
-    
-    # Users table
-    conn.execute('''
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            email TEXT UNIQUE NOT NULL,
-            password_hash TEXT NOT NULL,
-            user_type TEXT DEFAULT 'visitor',
-            first_name TEXT,
-            last_name TEXT,
-            company TEXT,
-            phone TEXT,
-            visitor_package TEXT DEFAULT 'Free',
-            partnership_package TEXT,
-            status TEXT DEFAULT 'pending',
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    ''')
-    
-    # Insert admin user if not exists
-    admin_password = generate_password_hash('admin123')
-    conn.execute('''
-        INSERT OR IGNORE INTO users (email, password_hash, user_type, status, first_name, last_name)
-        VALUES (?, ?, 'admin', 'validated', 'Admin', 'SIPORTS')
-    ''', ('admin@siportevent.com', admin_password))
-    
-    # Sample data
-    visitor_password = generate_password_hash('visitor123')
-    exhibitor_password = generate_password_hash('exhibitor123')
-    
-    conn.execute('''
-        INSERT OR IGNORE INTO users (email, password_hash, user_type, visitor_package, status, first_name, last_name, company)
-        VALUES (?, ?, 'visitor', 'Premium', 'validated', 'Marie', 'Dupont', 'Port Autonome Marseille')
-    ''', ('visitor@example.com', visitor_password))
-    
-    conn.execute('''
-        INSERT OR IGNORE INTO users (email, password_hash, user_type, partnership_package, status, first_name, last_name, company)
-        VALUES (?, ?, 'exhibitor', 'Gold', 'validated', 'Jean', 'Martin', 'Maritime Solutions Ltd')
-    ''', ('exposant@example.com', exhibitor_password))
-    
-    conn.commit()
-    conn.close()
-
-# Initialize database on startup
-init_database()
-
 # Models
 class UserLogin(BaseModel):
     email: str
