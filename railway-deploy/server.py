@@ -610,7 +610,17 @@ async def health_check():
 async def startup_event():
     """Initialize application on startup"""
     logger.info("SIPORTS v2.0 API starting...")
-    logger.info(f"Database: {DATABASE_URL}")
+    logger.info(f"Database URL: {DATABASE_URL}")
+    logger.info(f"Database type: {'PostgreSQL' if is_postgresql() else 'SQLite'}")
+    
+    # Initialize database
+    try:
+        init_database()
+        logger.info("Database initialized successfully")
+    except Exception as e:
+        logger.error(f"Database initialization failed: {e}")
+        raise
+    
     logger.info("AI Chatbot service initialized")
 
 if __name__ == "__main__":
