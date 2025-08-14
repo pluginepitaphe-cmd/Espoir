@@ -2,7 +2,7 @@
 
 ## ✅ PostgreSQL configuré avec succès !
 
-**URL Database :** `postgresql://postgres:GnGRudbZkcnpoSLViNmwSAPodQJaiyeg@postgres.railway.internal:5432/railway`
+**URL Database :** `postgresql://postgres:lEBpZDjELmcdJQPkTsphhWwXGZMFXyEa@postgres.railway.internal:5432/railway`
 
 ## 🔧 Variables Railway à configurer
 
@@ -12,7 +12,7 @@
 ENVIRONMENT=production
 LOG_LEVEL=INFO
 JWT_SECRET_KEY=siports-jwt-production-secure-final-2024
-DATABASE_URL=postgresql://postgres:GnGRudbZkcnpoSLViNmwSAPodQJaiyeg@postgres.railway.internal:5432/railway
+DATABASE_URL=postgresql://postgres:lEBpZDjELmcdJQPkTsphhWwXGZMFXyEa@postgres.railway.internal:5432/railway
 ```
 
 ## 📊 Test après déploiement
