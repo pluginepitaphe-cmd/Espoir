@@ -1,6 +1,11 @@
 // Configuration de base pour les appels API
 const getApiBaseUrl = () => {
-  // Utiliser la variable d'environnement REACT_APP_BACKEND_URL si disponible
+  // Utiliser la variable d'environnement VITE_BACKEND_URL pour Vite
+  if (import.meta.env.VITE_BACKEND_URL) {
+    return `${import.meta.env.VITE_BACKEND_URL}/api`;
+  }
+  
+  // Fallback pour REACT_APP_BACKEND_URL si défini
   if (import.meta.env.REACT_APP_BACKEND_URL) {
     return `${import.meta.env.REACT_APP_BACKEND_URL}/api`;
   }
