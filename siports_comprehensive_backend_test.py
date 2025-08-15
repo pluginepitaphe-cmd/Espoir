@@ -158,14 +158,20 @@ class SiportsComprehensiveBackendTester:
                         actual_type = user_data.get("user_type")
                         email = user_data.get("email")
                         
-                        # Handle exposant/exhibitor type mapping
-                        if (user_type == "exposant" and actual_type == "exhibitor") or actual_type == user_type:
+                        # Handle type mappings: visiteur->visitor, exposant->exhibitor
+                        expected_type = user_type
+                        if user_type == "visiteur":
+                            expected_type = "visitor"
+                        elif user_type == "exposant":
+                            expected_type = "exhibitor"
+                        
+                        if actual_type == expected_type:
                             success_count += 1
                             self.log_test(f"{user_type.title()} Authentication", True, 
                                         f"Successfully authenticated {email} as {actual_type}")
                         else:
                             self.log_test(f"{user_type.title()} Authentication", False, 
-                                        f"Type mismatch: expected {user_type}, got {actual_type}")
+                                        f"Type mismatch: expected {expected_type}, got {actual_type}")
                     else:
                         self.log_test(f"{user_type.title()} Authentication", False, 
                                     "Missing token or user data in response")
