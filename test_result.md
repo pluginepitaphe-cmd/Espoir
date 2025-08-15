@@ -275,10 +275,12 @@ test_plan:
     - "✅ TERMINÉ: Mini-site exposants professionnel style siportevent.com"
     - "✅ TERMINÉ: Tests backend API complets (95% fonctionnel)"
     - "✅ TERMINÉ: Intégration frontend-backend mini-sites"
+    - "🔧 EN COURS: Connexion frontend-Railway backend"
+    - "🔧 EN COURS: Tests Railway backend PostgreSQL"
     - "Optimisation et améliorations mineures"
   stuck_tasks: []
   test_all: true
-  test_priority: "minisite_integration_complete"
+  test_priority: "railway_backend_connection"
 
 agent_communication:
   - agent: "main"
