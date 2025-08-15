@@ -15,7 +15,7 @@
 
 ```env
 # Base de données (OBLIGATOIRE)
-DATABASE_URL=postgresql://postgres:EwHGholrYryNDKptvWQbCBYNYgYcSkUy@postgres.railway.internal:5432/railway
+DATABASE_URL=postgresql://postgres:SycuEBupEuxcrGsrDtlZiAutpDmGyyKN@postgres.railway.internal:5432/railway
 
 # Configuration (OBLIGATOIRES)
 ENVIRONMENT=production
