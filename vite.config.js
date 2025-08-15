@@ -21,6 +21,7 @@ export default defineConfig({
       clientPort: 443
     },
     allowedHosts: [
+      "siports-maritime.preview.emergentagent.com",
       "13099866-a689-4c8e-95cb-27f5e6358db4.preview.emergentagent.com",
       "bugfix-analyse.preview.emergentagent.com",
       "ccdbd87b-f928-491f-8b93-3a9ebfc2ec48.preview.emergentagent.com",
