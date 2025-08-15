@@ -787,7 +787,12 @@ class SiportsComprehensiveBackendTester:
                     integrity_issues.append(f"{user_type}: invalid email format")
                 
                 # Check user type consistency
-                expected_type = user_type if user_type != "exposant" else "exhibitor"
+                expected_type = user_type
+                if user_type == "visiteur":
+                    expected_type = "visitor"
+                elif user_type == "exposant":
+                    expected_type = "exhibitor"
+                    
                 actual_type = user_data.get("user_type", "")
                 if actual_type != expected_type:
                     integrity_issues.append(f"{user_type}: type mismatch ({actual_type} != {expected_type})")
