@@ -1,23 +1,43 @@
-// Configuration de base pour les appels API avec debug complet
-const FORCE_RAILWAY_BACKEND = 'https://siportevent-production.up.railway.app/api';
-
+// Configuration de base pour les appels API
 const getApiBaseUrl = () => {
-  // FORCE l'utilisation du backend Railway  
-  console.log('🔗 API Base URL forced to Railway:', FORCE_RAILWAY_BACKEND);
-  return FORCE_RAILWAY_BACKEND;
+  // Pour production Vercel - utiliser directement le backend Railway  
+  if (window.location.hostname.includes('vercel.app')) {
+    return 'https://siportevent-production.up.railway.app/api';
+  }
+  
+  // Utiliser la variable d'environnement VITE_BACKEND_URL pour Vite
+  if (import.meta.env.VITE_BACKEND_URL) {
+    return `${import.meta.env.VITE_BACKEND_URL}/api`;
+  }
+  
+  // Fallback pour REACT_APP_BACKEND_URL si défini
+  if (import.meta.env.REACT_APP_BACKEND_URL) {
+    return `${import.meta.env.REACT_APP_BACKEND_URL}/api`;
+  }
+  
+  // En développement local
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    return 'http://localhost:8001/api';
+  }
+  
+  // En production ou avec URL publique - utiliser directement Railway
+  const currentHost = window.location.hostname;
+  if (currentHost.includes('manusvm.computer') || currentHost.includes('emergentagent.com')) {
+    return `${window.location.protocol}//${window.location.hostname}/api`;
+  }
+  
+  // Fallback direct vers Railway
+  return 'https://siportevent-production.up.railway.app/api';
 };
 
 const API_BASE_URL = getApiBaseUrl();
 
 class ApiClient {
   async request(endpoint, options = {}) {
-    const url = `${API_BASE_URL}${endpoint}`;
-    console.log('🌐 API Request:', url);
-    console.log('🌐 Options:', options);
+    const url = `${API_BASE_URL}${endpoint}`
     
     // Récupérer le token d'authentification depuis localStorage
     const token = localStorage.getItem('token');
-    console.log('🔑 Token found:', !!token);
     
     const config = {
       headers: {
@@ -25,65 +45,39 @@ class ApiClient {
         ...(token && { 'Authorization': `Bearer ${token}` }),
         ...options.headers,
       },
-      mode: 'cors',
       ...options,
     }
-
-    console.log('🌐 Final request config:', config);
 
     if (config.body && typeof config.body === 'object') {
       config.body = JSON.stringify(config.body)
     }
 
     try {
-      console.log('📤 Sending request to:', url);
-      const response = await fetch(url, config);
-      
-      console.log('📥 Response received:', {
-        status: response.status,
-        statusText: response.statusText,
-        headers: [...response.headers.entries()],
-        ok: response.ok
-      });
-      
-      const data = await response.json();
-      console.log('📥 Response data:', data);
+      const response = await fetch(url, config)
+      const data = await response.json()
       
       if (!response.ok) {
-        console.error('❌ API Error:', {
-          status: response.status,
-          data: data
-        });
         throw new Error(data.detail || data.error || `HTTP error! status: ${response.status}`)
       }
       
-      console.log('✅ API Request successful');
       return data
     } catch (error) {
-      console.error('❌ API request failed:', {
-        url: url,
-        error: error.message,
-        stack: error.stack,
-        name: error.name
-      });
+      console.error('API request failed:', error)
       throw error
     }
   }
 
-  // Dashboard stats avec debug
+  // Dashboard stats
   async getDashboardStats() {
-    console.log('📊 Getting dashboard stats...');
     return this.request('/admin/dashboard/stats')
   }
 
-  // Users management avec debug
+  // Users management
   async getPendingUsers(page = 1, perPage = 10) {
-    console.log('👥 Getting pending users...');
     return this.request(`/admin/users/pending?page=${page}&per_page=${perPage}`)
   }
 
   async getUsers(filters = {}) {
-    console.log('👥 Getting users with filters:', filters);
     const params = new URLSearchParams()
     
     if (filters.page) params.append('page', filters.page)
@@ -95,16 +89,14 @@ class ApiClient {
     return this.request(`/admin/users?${params.toString()}`)
   }
 
-  async validateUser(userId, adminEmail = 'admin@siportevent.com') {
-    console.log('✅ Validating user:', userId);
+  async validateUser(userId, adminEmail = 'admin@salon-maritime.fr') {
     return this.request(`/admin/users/${userId}/validate`, {
       method: 'POST',
       body: { admin_email: adminEmail }
     })
   }
 
-  async rejectUser(userId, reason, comment = '', adminEmail = 'admin@siportevent.com') {
-    console.log('❌ Rejecting user:', userId);
+  async rejectUser(userId, reason, comment = '', adminEmail = 'admin@salon-maritime.fr') {
     return this.request(`/admin/users/${userId}/reject`, {
       method: 'POST',
       body: {
@@ -114,7 +106,42 @@ class ApiClient {
       }
     })
   }
+
+  async remindUser(userId, adminEmail = 'admin@salon-maritime.fr') {
+    return this.request(`/admin/users/${userId}/remind`, {
+      method: 'POST',
+      body: { admin_email: adminEmail }
+    })
+  }
+
+  async deactivateUser(userId) {
+    return this.request(`/admin/users/${userId}/deactivate`, {
+      method: 'POST'
+    })
+  }
+
+  async exportUsers(filters = {}) {
+    const params = new URLSearchParams()
+    
+    if (filters.type) params.append('type', filters.type)
+    if (filters.status) params.append('status', filters.status)
+    
+    return this.request(`/admin/users/export?${params.toString()}`)
+  }
+
+  // Reports management
+  async getReports(page = 1, perPage = 10) {
+    return this.request(`/admin/reports?page=${page}&per_page=${perPage}`)
+  }
+
+  async handleReport(reportId, action) {
+    return this.request(`/admin/reports/${reportId}/action`, {
+      method: 'POST',
+      body: { action }
+    })
+  }
 }
 
 export const apiClient = new ApiClient()
 export default apiClient
+
