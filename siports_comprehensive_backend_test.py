@@ -25,12 +25,12 @@ from typing import Dict, List, Any, Optional
 # Configuration - Using the local backend URL since Railway is not accessible
 BACKEND_URL = "http://localhost:8001/api"
 
-# Test credentials as specified in the request
+# Test credentials based on actual database setup
 TEST_CREDENTIALS = {
     "admin": {"email": "admin@siportevent.com", "password": "admin123"},
-    "exposant": {"email": "exposant@example.com", "password": "expo123"},
-    "visiteur": {"email": "visiteur@example.com", "password": "visit123"},
-    "partenaire": {"email": "partenaire@example.com", "password": "part123"}
+    "exposant": {"email": "exposant@example.com", "password": "exhibitor123"},
+    "visiteur": {"email": "visitor@example.com", "password": "visitor123"},
+    "partenaire": {"email": "partenaire@example.com", "password": "part123"}  # This user may not exist
 }
 
 class SiportsComprehensiveBackendTester:
