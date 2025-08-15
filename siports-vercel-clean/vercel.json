@@ -12,12 +12,6 @@
       "destination": "https://siportevent-production.up.railway.app/api/$1"
     }
   ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ],
   "headers": [
     {
       "source": "/api/(.*)",
