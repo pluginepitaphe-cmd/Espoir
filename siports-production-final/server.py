@@ -44,11 +44,30 @@ app = FastAPI(
 )
 
 # CORS configuration for production
+allowed_origins = [
+    "https://siportevent.com",
+    "https://www.siportevent.com", 
+    "https://siports-frontend.vercel.app",
+    "https://siports-v2.vercel.app",
+    "http://localhost:3000",  # Dev
+    "http://127.0.0.1:3000",  # Dev
+    "capacitor://localhost",  # App Store iOS
+    "ionic://localhost",      # App Store iOS  
+    "http://localhost",       # App Store Android
+    "https://localhost",      # App Store Android
+    "app://localhost",        # Electron/Desktop
+]
+
+# Add environment-specific origins
+cors_origins_env = os.environ.get("CORS_ORIGINS", "").split(",")
+if cors_origins_env and cors_origins_env != [""]:
+    allowed_origins.extend([origin.strip() for origin in cors_origins_env if origin.strip()])
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Configure with your Vercel domain
+    allow_origins=allowed_origins,
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
 
