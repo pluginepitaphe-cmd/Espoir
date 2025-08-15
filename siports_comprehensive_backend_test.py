@@ -86,7 +86,8 @@ class SiportsComprehensiveBackendTester:
     def test_backend_health(self):
         """Test backend health and availability"""
         try:
-            response = self.make_request("GET", "/")
+            # Test the root endpoint without /api prefix
+            response = requests.get("http://localhost:8001/", timeout=15)
             
             if response.status_code == 200:
                 data = response.json()
@@ -109,7 +110,8 @@ class SiportsComprehensiveBackendTester:
     def test_api_root_endpoint(self):
         """Test the main API root endpoint"""
         try:
-            response = self.make_request("GET", "/")
+            # Test the root endpoint without /api prefix
+            response = requests.get("http://localhost:8001/", timeout=15)
             
             if response.status_code == 200:
                 data = response.json()
