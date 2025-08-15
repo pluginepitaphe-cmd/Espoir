@@ -22,8 +22,8 @@ import os
 from datetime import datetime
 from typing import Dict, List, Any, Optional
 
-# Configuration - Using the production URL from frontend/.env
-BACKEND_URL = "https://siports-backend-production.up.railway.app/api"
+# Configuration - Using the local backend URL since Railway is not accessible
+BACKEND_URL = "http://localhost:8001/api"
 
 # Test credentials as specified in the request
 TEST_CREDENTIALS = {
