@@ -88,7 +88,7 @@ JWT_SECRET_KEY=votre-clé-jwt-sécurisée-32-caractères
 
 # URLs
 WORDPRESS_URL=https://siportevent.com
-SIPORTS_API_URL=https://maritime-app.preview.emergentagent.com
+SIPORTS_API_URL=https://siports-maritime.preview.emergentagent.com
 
 # Logs
 LOG_LEVEL=INFO
@@ -123,7 +123,7 @@ WP_DB_PASSWORD=$DB_PASSWORD
 WP_TABLE_PREFIX=wp_
 JWT_SECRET_KEY=$JWT_KEY
 WORDPRESS_URL=https://siportevent.com
-SIPORTS_API_URL=https://maritime-app.preview.emergentagent.com
+SIPORTS_API_URL=https://siports-maritime.preview.emergentagent.com
 LOG_LEVEL=INFO
 EOL
 
