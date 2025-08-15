@@ -87,3 +87,5 @@ agenthub/agents/youtube/db
 # Mobile development
 android-sdk/ siports-final.tar.gz
 siports-final.tar.gz
+siports-frontend-vercel/node_modules/@next/swc-linux-arm64-musl/next-swc.linux-arm64-musl.node
+siports-frontend-vercel/node_modules/@next/swc-linux-arm64-gnu/next-swc.linux-arm64-gnu.node
