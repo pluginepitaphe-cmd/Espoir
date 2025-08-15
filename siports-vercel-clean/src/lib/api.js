@@ -1,5 +1,10 @@
 // Configuration de base pour les appels API
 const getApiBaseUrl = () => {
+  // Pour production Vercel - utiliser directement le backend Railway  
+  if (window.location.hostname.includes('vercel.app')) {
+    return 'https://siportevent-production.up.railway.app/api';
+  }
+  
   // Utiliser la variable d'environnement VITE_BACKEND_URL pour Vite
   if (import.meta.env.VITE_BACKEND_URL) {
     return `${import.meta.env.VITE_BACKEND_URL}/api`;
@@ -15,14 +20,14 @@ const getApiBaseUrl = () => {
     return 'http://localhost:8001/api';
   }
   
-  // En production ou avec URL publique
+  // En production ou avec URL publique - utiliser directement Railway
   const currentHost = window.location.hostname;
   if (currentHost.includes('manusvm.computer') || currentHost.includes('emergentagent.com')) {
     return `${window.location.protocol}//${window.location.hostname}/api`;
   }
   
-  // Fallback
-  return 'http://localhost:8001/api';
+  // Fallback direct vers Railway
+  return 'https://siportevent-production.up.railway.app/api';
 };
 
 const API_BASE_URL = getApiBaseUrl();
