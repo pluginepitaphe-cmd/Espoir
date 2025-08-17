@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  # Base de données PostgreSQL pour développement
+  postgres:
+    image: postgres:15
+    container_name: siports_postgres
+    environment:
+      POSTGRES_DB: siports
+      POSTGRES_USER: siports_user
+      POSTGRES_PASSWORD: siports_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U siports_user -d siports"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Backend FastAPI
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: siports_backend
+    ports:
+      - "8001:8001"
+    environment:
+      - DATABASE_URL=postgresql://siports_user:siports_password@postgres:5432/siports
+      - JWT_SECRET_KEY=your-super-secret-jwt-key-change-in-production
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+    command: python server.py
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Frontend React
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: siports_frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_BACKEND_URL=http://localhost:8001
+    volumes:
+      - ./frontend:/app
+    command: npm run dev
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
