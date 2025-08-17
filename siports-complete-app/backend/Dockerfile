@@ -1,29 +1,30 @@
-# Dockerfile pour SIPORTS Backend v2.0
-FROM python:3.9-slim
+FROM python:3.11-slim
 
-# Variables d'environnement
-ENV PORT=8000
-ENV PYTHONPATH=/app
-ENV DATABASE_URL=instance/siports_production.db
-ENV JWT_SECRET_KEY=siports-jwt-production-2024
-
-# Répertoire de travail
 WORKDIR /app
 
-# Copier les fichiers de requirements
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements first for better caching
 COPY requirements.txt .
 
-# Installer les dépendances
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copier le code source
+# Copy application code
 COPY . .
 
-# Créer le répertoire instance s'il n'existe pas
+# Create instance directory for SQLite (fallback)
 RUN mkdir -p instance
 
-# Exposer le port
-EXPOSE 8000
+# Expose port
+EXPOSE 8001
 
-# Commande de démarrage
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD python -c "import requests; requests.get('http://localhost:8001/')"
+
+# Command to run the application
 CMD ["python", "server.py"]
