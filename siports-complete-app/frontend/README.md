@@ -1,65 +1,97 @@
-# 🚀 SIPORTS v2.0 - Package Vercel FIXED
+# 🌐 SIPORTS Frontend - React + Vite
 
-## ✅ Version Corrigée - Configuration Vercel Valide
+## 📋 Description
 
-Package corrigé avec configuration Vercel.json conforme aux règles Vercel.
+Frontend React complet pour SIPORTS v2.0 avec :
+- Interface utilisateur moderne
+- Authentification multi-rôles
+- Dashboard administrateur
+- Pages exposants professionnelles
+- Système de packages
+- Intégration chatbot IA
 
-### 🔧 Corrections Appliquées
+## 🚀 Installation Locale
 
-1. **❌ Supprimé `routes`** - Conflit avec `rewrites` résolu
-2. **✅ Gardé `rewrites`** - Pour proxy API vers Railway  
-3. **✅ Gardé `headers`** - Pour CORS
-4. **✅ Gardé `cleanUrls`** - Pour URLs propres
-5. **✅ Configuration validée** - Conforme aux règles Vercel
+```bash
+# Installer les dépendances
+npm install
+# ou
+yarn install
 
-### 📦 Déploiement sur Vercel
+# Configurer les variables d'environnement
+cp .env.example .env
+# Modifier .env avec l'URL de votre backend
 
-#### Étape 1 : Préparation
-1. Extraire : `tar -xzf SIPORTS_VERCEL_FIXED.tar.gz`
-2. Dossier `siports-vercel-clean/` prêt
-
-#### Étape 2 : Upload Vercel
-1. https://vercel.com/new
-2. Glisser-déposer `siports-vercel-clean/`
-3. Auto-détection Vite ✅
-4. Deploy automatique ✅
-
-### ⚙️ Configuration Vercel.json
-
-```json
-{
-  "version": 2,
-  "framework": "vite",
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "cleanUrls": true,
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "https://siportevent-production.up.railway.app/api/$1"
-    }
-  ],
-  "headers": [...]
-}
+# Lancer en mode développement
+npm run dev
+# ou
+yarn dev
 ```
 
-### 🔗 Backend Railway
-- **URL**: https://siportevent-production.up.railway.app
-- **Database**: PostgreSQL
-- **Proxy**: `/api/*` → Backend automatiquement
+## 📦 Scripts Disponibles
 
-### 🧪 Comptes de Test
+```bash
+npm run dev      # Serveur de développement
+npm run build    # Build de production
+npm run preview  # Aperçu du build
+npm run lint     # Vérification du code
+```
+
+## 🏗️ Build de Production
+
+```bash
+# Build optimisé
+npm run build
+
+# Le dossier dist/ contient les fichiers prêts pour déploiement
+```
+
+## 🔗 Configuration Backend
+
+### Développement Local
+```env
+VITE_BACKEND_URL=http://localhost:8001
+```
+
+### Production
+```env
+VITE_BACKEND_URL=https://siportevent-production.up.railway.app
+```
+
+## 📱 Pages Principales
+
+### Publiques
+- `/` - Page d'accueil
+- `/login` - Connexion
+- `/register` - Inscription
+- `/exposants` - Annuaire exposants
+- `/partenaires` - Page partenaires
+- `/forfaits` - Forfaits visiteur
+
+### Authentifiées
+- `/dashboard` - Dashboard utilisateur
+- `/admin/dashboard` - Dashboard administrateur
+- `/calendrier` - Calendrier des RDV
+- `/messages` - Messagerie
+- `/networking` - Réseautage
+- `/analytics` - Analytics (admin)
+
+## 🧪 Comptes de Test
+
 - **Admin**: admin@siportevent.com / admin123
 - **Exposant**: exposant@example.com / exhibitor123
 - **Visiteur**: visitor@example.com / visitor123
 
-### ⚡ Technologies
-- React 18 + Vite 6 + Tailwind CSS
-- React Router DOM v7
-- Recharts pour analytics
-- Axios pour API calls
-- Lucide React pour icônes
+## 🎨 Technologies Utilisées
 
----
+- **React 18** - Framework principal
+- **Vite 6** - Build tool moderne
+- **Tailwind CSS** - Framework CSS
+- **React Router** - Navigation
+- **Recharts** - Graphiques analytics
+- **Lucide React** - Icônes
+- **Axios** - Appels API
 
-**Configuration Vercel 100% valide - Prêt pour déploiement !** ✅
+## 🚀 Déploiement Vercel
+
+Voir `../docs/DEPLOY_FRONTEND.md` pour les instructions complètes.
