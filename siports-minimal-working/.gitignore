@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+*.log
+
+# Build outputs  
+dist/
+build/
+
+# Environment files
+.env.local
+.env.development.local
+.env.test.local
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+venv/
+instance/
+
+# Deployment
+.vercel
