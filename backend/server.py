@@ -424,6 +424,214 @@ async def get_partnership_packages():
     return {"packages": packages}
 
 # =============================================================================
+# EXPOSANTS/EXHIBITORS ENDPOINTS
+# =============================================================================
+
+@app.get("/api/exposants")
+async def get_exposants():
+    """Get all exhibitors/exposants for the directory"""
+    # Mock data for exhibitors - same as frontend
+    exposants = [
+        {
+            "id": 1,
+            "name": "TechMarine Solutions",
+            "category": "Technologies Maritimes",
+            "logo": "/images/logo1.png",
+            "description": "Solutions technologiques pour l'industrie maritime",
+            "stand": "A12",
+            "hall": "Hall Innovation",
+            "website": "https://techmarinesolutions.com",
+            "email": "contact@techmarinesolutions.com",
+            "phone": "+33 1 23 45 67 89",
+            "specialties": ["IoT Maritime", "Navigation Intelligente", "Maintenance Prédictive"],
+            "products": [
+                "SmartShip Navigator - Système de navigation IA",
+                "MarineIoT Hub - Plateforme IoT embarquée",
+                "PredictMaintain - Solution maintenance prédictive"
+            ],
+            "certifications": ["ISO 9001", "ISO 14001", "Maritime MED"],
+            "founded": 2015,
+            "employees": "50-100",
+            "countries": ["France", "Allemagne", "Norvège"]
+        },
+        {
+            "id": 2,
+            "name": "Green Port Energy",
+            "category": "Énergies Renouvelables",
+            "logo": "/images/logo2.png",
+            "description": "Transition énergétique des ports et terminaux",
+            "stand": "B08",
+            "hall": "Hall Environnement",
+            "website": "https://greenportenergy.com",
+            "email": "info@greenportenergy.com", 
+            "phone": "+33 2 34 56 78 90",
+            "specialties": ["Énergie Solaire", "Éolien Offshore", "Stockage Batterie"],
+            "products": [
+                "SolarPort - Ombrières solaires pour ports",
+                "WindTerminal - Éoliennes portuaires",
+                "BatteryHub - Stockage énergétique intelligent"
+            ],
+            "certifications": ["ISO 50001", "REC Certified", "Wind Power"],
+            "founded": 2018,
+            "employees": "20-50", 
+            "countries": ["France", "Espagne", "Portugal"]
+        },
+        {
+            "id": 3,
+            "name": "Smart Container Corp",
+            "category": "Logistique Intelligente", 
+            "logo": "/images/logo3.png",
+            "description": "Conteneurs connectés et logistique 4.0",
+            "stand": "C15",
+            "hall": "Hall Logistique",
+            "website": "https://smartcontainer.com",
+            "email": "hello@smartcontainer.com",
+            "phone": "+33 3 45 67 89 01",
+            "specialties": ["Conteneurs Connectés", "Tracking IoT", "Blockchain Logistique"],
+            "products": [
+                "ConnectBox - Conteneurs intelligents",
+                "TrackChain - Traçabilité blockchain", 
+                "LogiAI - Intelligence artificielle logistique"
+            ],
+            "certifications": ["ISO 28000", "CTPAT", "AEO"],
+            "founded": 2020,
+            "employees": "10-20",
+            "countries": ["France", "Pays-Bas", "Belgique"]
+        },
+        {
+            "id": 4,
+            "name": "Ocean Data Analytics",
+            "category": "Big Data Maritime",
+            "logo": "/images/logo4.png", 
+            "description": "Analyse de données pour l'industrie maritime",
+            "stand": "D22",
+            "hall": "Hall Innovation",
+            "website": "https://oceandataanalytics.com",
+            "email": "data@oceandataanalytics.com",
+            "phone": "+33 4 56 78 90 12",
+            "specialties": ["Machine Learning", "Prédiction Météo", "Optimisation Routes"],
+            "products": [
+                "WeatherPredict - Prédiction météorologique avancée",
+                "RouteOptim - Optimisation de routes maritimes",
+                "FleetAnalytics - Analyse performance flotte"
+            ],
+            "certifications": ["ISO 27001", "GDPR Certified", "Cloud Security"],
+            "founded": 2017,
+            "employees": "30-50",
+            "countries": ["France", "UK", "Canada"]
+        },
+        {
+            "id": 5,
+            "name": "AquaTech Innovations",
+            "category": "Technologies Marines",
+            "logo": "/images/logo5.png",
+            "description": "Innovations pour l'aquaculture et l'environnement marin", 
+            "stand": "E05",
+            "hall": "Hall Environnement",
+            "website": "https://aquatechinnovations.com",
+            "email": "contact@aquatechinnovations.com",
+            "phone": "+33 5 67 89 01 23",
+            "specialties": ["Aquaculture Durable", "Surveillance Marine", "Biotechnologies"],
+            "products": [
+                "AquaFarm Pro - Systèmes aquaculture intelligente",
+                "MarineWatch - Surveillance écosystèmes marins",
+                "BioClean - Solutions bioremédiation"
+            ],
+            "certifications": ["ASC Aquaculture", "Marine Stewardship", "Bio Certified"],
+            "founded": 2016,
+            "employees": "25-50",
+            "countries": ["France", "Norvège", "Chili"]
+        },
+        {
+            "id": 6,
+            "name": "Port Security Systems",
+            "category": "Sécurité Portuaire",
+            "logo": "/images/logo6.png",
+            "description": "Solutions de sécurité et surveillance pour ports",
+            "stand": "F18", 
+            "hall": "Hall Sécurité",
+            "website": "https://portsecuritysystems.com",
+            "email": "security@portsecuritysystems.com",
+            "phone": "+33 6 78 90 12 34",
+            "specialties": ["Vidéosurveillance IA", "Contrôle Accès", "Détection Intrusion"],
+            "products": [
+                "SecurePort AI - Surveillance intelligente par IA",
+                "AccessGuard - Contrôle d'accès biométrique",
+                "ThreatDetect - Détection de menaces en temps réel"
+            ],
+            "certifications": ["ISO 27001", "ANSSI Qualified", "Security Certified"],
+            "founded": 2014,
+            "employees": "40-80",
+            "countries": ["France", "Italie", "Grèce"]
+        }
+    ]
+    
+    return {"exposants": exposants, "total": len(exposants)}
+
+@app.get("/api/exposants/{exposant_id}")
+async def get_exposant_detail(exposant_id: int):
+    """Get detailed information for a specific exposant"""
+    # This would normally fetch from database
+    # For now, return mock data for the specific exposant
+    
+    exposants_data = {
+        1: {
+            "id": 1,
+            "name": "TechMarine Solutions",
+            "category": "Technologies Maritimes",
+            "description": "Leader européen des solutions technologiques pour l'industrie maritime depuis 2015. Spécialisé dans l'IoT maritime, la navigation intelligente et la maintenance prédictive.",
+            "stand": "A12",
+            "hall": "Hall Innovation",
+            "website": "https://techmarinesolutions.com",
+            "email": "contact@techmarinesolutions.com",
+            "phone": "+33 1 23 45 67 89",
+            "logo": "/images/logo1.png",
+            "images": ["/images/tech1.jpg", "/images/tech2.jpg", "/images/tech3.jpg"],
+            "specialties": ["IoT Maritime", "Navigation Intelligente", "Maintenance Prédictive"],
+            "products": [
+                {
+                    "name": "SmartShip Navigator",
+                    "description": "Système de navigation assistée par intelligence artificielle",
+                    "features": ["Navigation autonome", "Évitement obstacles", "Optimisation carburant"]
+                },
+                {
+                    "name": "MarineIoT Hub", 
+                    "description": "Plateforme IoT embarquée pour navires connectés",
+                    "features": ["Capteurs temps réel", "Maintenance prédictive", "Télémétrie avancée"]
+                }
+            ],
+            "team": [
+                {"name": "Pierre Durand", "role": "CEO & Fondateur", "email": "p.durand@techmarinesolutions.com"},
+                {"name": "Marie Lambert", "role": "CTO", "email": "m.lambert@techmarinesolutions.com"}
+            ],
+            "presentations": [
+                {
+                    "title": "L'avenir de la navigation autonome",
+                    "date": "2026-03-15T14:30:00",
+                    "duration": "45 minutes",
+                    "location": "Salle Innovation A"
+                }
+            ],
+            "special_offers": [
+                "Démonstration gratuite sur stand",
+                "20% de réduction pour commandes salon",
+                "Formation gratuite avec installation"
+            ],
+            "founded": 2015,
+            "employees": "50-100",
+            "turnover": "12M€ (2024)",
+            "countries": ["France", "Allemagne", "Norvège"],
+            "certifications": ["ISO 9001", "ISO 14001", "Maritime MED"]
+        }
+        # Add other exposants as needed...
+    }
+    
+    if exposant_id not in exposants_data:
+        raise HTTPException(status_code=404, detail="Exposant non trouvé")
+    
+    return exposants_data[exposant_id]
+
+# =============================================================================
 # ADMIN ENDPOINTS
 # =============================================================================
 
