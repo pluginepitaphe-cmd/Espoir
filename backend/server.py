@@ -1252,19 +1252,19 @@ async def get_public_enhanced_minisite(user_id: int):
             response_data = enhanced_data
         else:
             response_data = {
-                "name": user_data['company'] or user_data['first_name'] + ' ' + user_data['last_name'],
+                "name": user_data.get('company') or f"{user_data.get('first_name', '')} {user_data.get('last_name', '')}".strip(),
                 "tagline": 'Expert du secteur maritime',
                 "category": 'Professionnel Maritime',
                 "icon": '⚓',
                 "description": 'Professionnel expérimenté dans le secteur maritime.',
-                "email": user_data['email'],
-                "phone": user_data['phone'],
+                "email": user_data.get('email', ''),
+                "phone": user_data.get('phone', ''),
                 "products": products,
                 "contacts": {
                     "general": {
-                        "name": f"{user_data['first_name']} {user_data['last_name']}",
-                        "email": user_data['email'],
-                        "phone": user_data['phone'] or 'Non renseigné'
+                        "name": f"{user_data.get('first_name', '')} {user_data.get('last_name', '')}".strip(),
+                        "email": user_data.get('email', ''),
+                        "phone": user_data.get('phone') or 'Non renseigné'
                     }
                 }
             }
