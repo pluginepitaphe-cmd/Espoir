@@ -59,6 +59,7 @@ function App() {
               <Route path="/partenaires/forfaits" element={<PartnershipPackagesPage />} />
               <Route path="/matching" element={<AdvancedMatchingSystem />} />
               <Route path="/matching-ai" element={<IntelligentMatchingSystem />} />
+              <Route path="/reseautage-ai" element={<AINetworkingHub />} />
               
               {/* Routes avec layout */}
               <Route element={<Layout />}>
