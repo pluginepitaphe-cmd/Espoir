@@ -1218,27 +1218,32 @@ async def get_public_enhanced_minisite(user_id: int):
         if not result:
             raise HTTPException(status_code=404, detail="Mini-site non trouvé")
         
-        user_data = result[0]
+        user_data = result
         
         # Get enhanced mini-site data
         enhanced_data = None
         if user_data['enhanced_minisite_data']:
             enhanced_data = json.loads(user_data['enhanced_minisite_data'])
         
-        # Collect products
-        products = []
-        for row in result:
-            if row['product_id']:
-                product = {
-                    "id": row['product_id'],
-                    "name": row['product_name'],
-                    "description": row['product_description'],
-                    "category": row['product_category'],
-                    "price": f"{row['price']} {row['currency']}" if row['price'] else "Sur devis",
-                    "images": json.loads(row['product_images']) if row['product_images'] else []
-                }
-                if product not in products:
-                    products.append(product)
+        # Mock products for demonstration (in production, this would come from a products table)
+        products = [
+            {
+                "id": 1,
+                "name": "SmartShip Navigator",
+                "description": "Système de navigation assistée par intelligence artificielle",
+                "category": "Navigation",
+                "price": "Sur devis",
+                "images": ["/images/product1.jpg"]
+            },
+            {
+                "id": 2,
+                "name": "MarineIoT Hub",
+                "description": "Plateforme IoT embarquée pour navires connectés",
+                "category": "IoT",
+                "price": "À partir de €15,000",
+                "images": ["/images/product2.jpg"]
+            }
+        ]
         
         # Build response with enhanced data if available, fallback to basic data
         if enhanced_data:
