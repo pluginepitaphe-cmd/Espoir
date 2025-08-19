@@ -20,8 +20,8 @@ RUN echo '#!/bin/bash\nrm -f package-lock.json\nyarn install --network-timeout 3
 # Copier package.json
 COPY package.json ./
 
-# Installation ultra-sécurisée avec fallback
-RUN /install.sh || (rm -f yarn.lock && yarn install --network-timeout 300000)
+# Installation ultra-sécurisée avec fallback (INCLUT devDependencies)
+RUN /install.sh || (rm -f yarn.lock && yarn install --network-timeout 300000 --production=false)
 
 # Copier le code source
 COPY . .
