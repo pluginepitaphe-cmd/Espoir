@@ -51,7 +51,8 @@ const Navigation = () => {
     { path: '/dashboard', label: 'Tableau de bord', icon: Home },
     { path: '/exposants', label: 'Exposants', icon: Ship },
     { path: '/partenaires', label: 'Partenaires', icon: Handshake },
-    { path: '/reseautage', label: 'Réseautage', icon: Users },
+    { path: '/reseautage-ai', label: 'Réseautage IA', icon: Network },
+    { path: '/matching-ai', label: 'Matching IA', icon: Brain },
     { path: '/calendrier', label: 'Calendrier', icon: Calendar },
     { path: '/messages', label: 'Messages', icon: MessageSquare }
   ];
