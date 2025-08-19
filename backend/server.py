@@ -84,7 +84,7 @@ def init_database():
     ''', ('admin@siportevent.com', admin_password))
     
     # Sample data
-    visitor_password = generate_password_hash('visitor123')
+    visitor_password = generate_password_hash('visit123')
     exhibitor_password = generate_password_hash('exhibitor123')
     
     conn.execute('''
