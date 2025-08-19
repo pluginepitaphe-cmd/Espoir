@@ -11,7 +11,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { 
   Building2, Package, Users, FileText, Image as ImageIcon, Eye, Save, 
   Plus, Trash2, Edit, Upload, Star, Award, Globe, Mail, Phone, MapPin,
-  Calendar, TrendingUp, Target, Lightbulb, CheckCircle, ArrowLeft
+  Calendar, TrendingUp, Target, Lightbulb, CheckCircle, ArrowLeft, Loader2
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
