@@ -16,3 +16,7 @@ build
 __pycache__
 *.pyc
 .pytest_cache
+
+# Ignore package-lock.json pour éviter les conflits avec yarn
+package-lock.json
+**/package-lock.json
