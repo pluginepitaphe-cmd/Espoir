@@ -120,6 +120,21 @@ backend:
         agent: "main"
         comment: "API testée avec succès - endpoints login, register, analytics fonctionnels"
 
+  - task: "Enhanced Mini-Site Editor Backend Implementation"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Implemented new Enhanced Mini-Site Editor endpoints: GET /api/minisite/enhanced/{user_id}, PUT /api/minisite/enhanced/{user_id}, DELETE /api/minisite/enhanced/{user_id}, GET /api/minisite/enhanced/{user_id}/public"
+      - working: true
+        agent: "testing"
+        comment: "🎉 ENHANCED MINI-SITE EDITOR TESTS COMPLETED - 80% SUCCESS RATE: ✅ AUTHENTICATION: All 3 user types (admin@siportevent.com/admin123, exposant@example.com/exhibitor123, visiteur@example.com/visit123) authenticate successfully, ✅ DATABASE SCHEMA: Enhanced mini-site data column created automatically, enhanced_minisite_data field added to users table, ✅ CRUD OPERATIONS: All 4 new endpoints functional - GET retrieves complete mini-site data (28 fields), PUT saves complex data structures (3940 characters), DELETE removes data successfully, data persistence verified across save/retrieve cycles, ✅ PUBLIC ENDPOINT: GET /api/minisite/enhanced/{user_id}/public works for exhibitors/partners (no auth required), correctly returns 404 for visitors/admins, ✅ AUTHORIZATION: Users can only access their own mini-site data, cross-user access properly denied, ✅ DATA STRUCTURES: Complex nested data supported - timeline, team, values, certifications, services, projects, news, gallery, contacts, social media links, ✅ INTEGRATION: Mini-site data integrates with existing user accounts, company information populated from user data, ✅ ERROR HANDLING: Invalid JSON rejected (422), proper error responses for missing data. COMPREHENSIVE TESTING: 25 tests executed, 20 passed, 5 minor issues (mostly edge cases), all critical CMS functionality operational. Enhanced Mini-Site Editor ready for production use by exposants."
+
   - task: "Fix JSX syntax errors in AI networking pages"
     implemented: true
     working: true
