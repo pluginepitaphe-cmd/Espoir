@@ -725,6 +725,317 @@ async def reject_user(user_id: int, admin: dict = Depends(admin_required)):
         raise HTTPException(status_code=500, detail="Erreur rejet utilisateur")
 
 # =============================================================================
+# AI MATCHING & NETWORKING ENDPOINTS
+# =============================================================================
+
+class NetworkingProfile(BaseModel):
+    """Model for networking profile data"""
+    objectives: List[str] = []
+    interests: List[str] = []
+    expertise: List[str] = []
+    availability: dict = {}
+    budget_range: Optional[str] = None
+    language_preferences: List[str] = []
+
+class MatchingFilters(BaseModel):
+    """Model for AI matching filters"""
+    match_type: str = 'all'
+    sector: str = 'all' 
+    compatibility_min: int = 70
+    location: str = 'all'
+    budget: str = 'all'
+    language: str = 'all'
+    semantic_search: bool = False
+    search_query: Optional[str] = None
+
+@app.post("/api/networking/profiles")
+async def get_networking_profiles(filters: MatchingFilters, user: dict = Depends(get_current_user)):
+    """Get networking profiles with AI matching"""
+    try:
+        conn = sqlite3.connect(DATABASE_URL)
+        conn.row_factory = sqlite3.Row
+        
+        # Base query for all users except current user
+        query = '''
+            SELECT id, email, first_name, last_name, company, user_type, 
+                   visitor_package, partnership_package, status, created_at
+            FROM users 
+            WHERE id != ? AND status = 'validated'
+        '''
+        params = [user['id']]
+        
+        # Apply filters
+        if filters.match_type != 'all':
+            if filters.match_type == 'partner':
+                query += ' AND user_type IN ("exhibitor", "partner")'
+            else:
+                query += ' AND user_type = ?'
+                params.append(filters.match_type)
+        
+        profiles = conn.execute(query, params).fetchall()
+        conn.close()
+        
+        # Convert to enhanced profile format
+        enhanced_profiles = []
+        for profile in profiles:
+            profile_dict = dict(profile)
+            
+            # Add mock data for demonstration (in production, this would come from extended profile tables)
+            enhanced_profile = {
+                **profile_dict,
+                'name': f"{profile_dict['first_name']} {profile_dict['last_name']}",
+                'title': get_mock_title(profile_dict['user_type']),
+                'sector': get_mock_sector(profile_dict['user_type']),
+                'location': get_mock_location(),
+                'description': get_mock_description(profile_dict['user_type']),
+                'interests': get_mock_interests(profile_dict['user_type']),
+                'languages': ['Français', 'Anglais'],
+                'availability': {
+                    'status': 'Disponible',
+                    'preferred_slots': ['09:00-12:00', '14:00-17:00']
+                },
+                'compatibility': calculate_mock_compatibility(user, profile_dict),
+                'business_potential': get_business_potential(profile_dict['user_type']),
+                'connection_status': 'not_connected'
+            }
+            
+            enhanced_profiles.append(enhanced_profile)
+        
+        # Apply AI filtering and sorting
+        if filters.semantic_search and filters.search_query:
+            enhanced_profiles = apply_semantic_search(enhanced_profiles, filters.search_query)
+        
+        # Filter by compatibility
+        enhanced_profiles = [p for p in enhanced_profiles if p['compatibility'] >= filters.compatibility_min]
+        
+        # Sort by compatibility
+        enhanced_profiles.sort(key=lambda x: x['compatibility'], reverse=True)
+        
+        return {"profiles": enhanced_profiles[:20]}  # Limit to 20 results
+        
+    except Exception as e:
+        logger.error(f"Networking profiles error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Erreur récupération profils")
+
+@app.post("/api/networking/ai-suggestions")
+async def get_ai_suggestions(user: dict = Depends(get_current_user)):
+    """Get AI-powered networking suggestions"""
+    try:
+        suggestions = [
+            {
+                'type': 'connection',
+                'title': 'Nouvelle connexion suggérée',
+                'description': 'Expert en IA maritime avec 4 intérêts communs détectés',
+                'priority': 'high',
+                'action': 'Se connecter'
+            },
+            {
+                'type': 'meeting',
+                'title': 'Créneau optimal détecté', 
+                'description': 'Partenaire disponible dans 2h - compatibilité 94%',
+                'priority': 'medium',
+                'action': 'Planifier RDV'
+            },
+            {
+                'type': 'content',
+                'title': 'Contenu pertinent',
+                'description': 'Nouveau whitepaper publié par votre réseau',
+                'priority': 'low',
+                'action': 'Consulter'
+            }
+        ]
+        
+        return {"suggestions": suggestions}
+        
+    except Exception as e:
+        logger.error(f"AI suggestions error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Erreur suggestions IA")
+
+@app.post("/api/networking/conversation-starters/{profile_id}")
+async def get_conversation_starters(profile_id: int, user: dict = Depends(get_current_user)):
+    """Get AI-generated conversation starters for a profile"""
+    try:
+        conn = sqlite3.connect(DATABASE_URL)
+        conn.row_factory = sqlite3.Row
+        
+        profile = conn.execute(
+            'SELECT * FROM users WHERE id = ?', (profile_id,)
+        ).fetchone()
+        conn.close()
+        
+        if not profile:
+            raise HTTPException(status_code=404, detail="Profil non trouvé")
+        
+        # Generate conversation starters based on profile
+        starters = [
+            {
+                'category': 'Professionnel',
+                'message': f'Bonjour {profile["first_name"]}, j\'ai vu votre expertise en {get_mock_sector(profile["user_type"])}. Quelles sont vos approches innovantes dans ce domaine ?',
+                'context': 'Basé sur le secteur d\'expertise'
+            },
+            {
+                'category': 'Business',
+                'message': f'Nous partageons des objectifs similaires. Seriez-vous intéressé pour explorer des synergies entre nos organisations ?',
+                'context': 'Objectifs business alignés'
+            },
+            {
+                'category': 'Technique', 
+                'message': f'J\'aimerais échanger sur les dernières innovations dans votre secteur. Avez-vous du temps pour une discussion ?',
+                'context': 'Échange technique et innovation'
+            }
+        ]
+        
+        return {"conversation_starters": starters}
+        
+    except Exception as e:
+        logger.error(f"Conversation starters error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Erreur suggestions conversation")
+
+@app.post("/api/networking/connect/{profile_id}")
+async def send_connection_request(profile_id: int, user: dict = Depends(get_current_user)):
+    """Send a connection request"""
+    try:
+        # In a real implementation, this would create a connection request record
+        return {"message": "Demande de connexion envoyée avec succès"}
+        
+    except Exception as e:
+        logger.error(f"Connection request error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Erreur demande de connexion")
+
+@app.post("/api/matching/calculate-compatibility") 
+async def calculate_compatibility(profile_data: dict, user: dict = Depends(get_current_user)):
+    """Calculate AI compatibility score between users"""
+    try:
+        # Simplified compatibility calculation
+        base_score = 70
+        
+        # Sector compatibility
+        if profile_data.get('sector') and user.get('sector'):
+            if profile_data['sector'] == user['sector']:
+                base_score += 20
+            elif are_compatible_sectors(profile_data['sector'], user['sector']):
+                base_score += 10
+        
+        # User type synergy
+        user_type_bonus = {
+            ('visitor', 'exhibitor'): 15,
+            ('visitor', 'partner'): 12,
+            ('exhibitor', 'partner'): 18
+        }
+        
+        user_types = tuple(sorted([user.get('user_type', ''), profile_data.get('user_type', '')]))
+        base_score += user_type_bonus.get(user_types, 0)
+        
+        # Cap at 100%
+        compatibility = min(100, base_score)
+        
+        return {
+            "compatibility_score": compatibility,
+            "breakdown": {
+                "sectorial": min(100, base_score - 70 + 70),
+                "user_type": user_type_bonus.get(user_types, 0),
+                "overall": compatibility
+            }
+        }
+        
+    except Exception as e:
+        logger.error(f"Compatibility calculation error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Erreur calcul compatibilité")
+
+# Helper functions for mock data generation
+def get_mock_title(user_type):
+    titles = {
+        'visitor': ['Directeur Général', 'Directeur Innovation', 'Chef de Projet'],
+        'exhibitor': ['CTO', 'VP Sales', 'Business Development Manager'],
+        'partner': ['CEO', 'VP Partnerships', 'Chief Innovation Officer']
+    }
+    import random
+    return random.choice(titles.get(user_type, ['Manager']))
+
+def get_mock_sector(user_type):
+    sectors = {
+        'visitor': ['Gestion Portuaire', 'Logistique Maritime', 'Transport Maritime'],
+        'exhibitor': ['Technologies Marines', 'Equipment Portuaire', 'Solutions IoT'],
+        'partner': ['Innovation Maritime', 'Investissement Tech', 'Consulting Maritime']
+    }
+    import random
+    return random.choice(sectors.get(user_type, ['Maritime']))
+
+def get_mock_location():
+    locations = ['Paris, France', 'Rotterdam, Pays-Bas', 'Singapour', 'Dubaï, EAU', 'Hambourg, Allemagne']
+    import random
+    return random.choice(locations)
+
+def get_mock_description(user_type):
+    descriptions = {
+        'visitor': 'Dirigeant expérimenté dans la modernisation des infrastructures maritimes avec focus sur l\'innovation et la durabilité.',
+        'exhibitor': 'Expert en solutions technologiques pour l\'industrie maritime, spécialisé dans l\'IoT et l\'automatisation portuaire.',
+        'partner': 'Leader de l\'innovation maritime, spécialisé dans les partenariats technologiques stratégiques et les investissements.'
+    }
+    return descriptions.get(user_type, 'Professionnel du secteur maritime.')
+
+def get_mock_interests(user_type):
+    interests = {
+        'visitor': ['Digital Transformation', 'Port Automation', 'Sustainability', 'Smart Logistics'],
+        'exhibitor': ['IoT Maritime', 'AI & ML', 'Blockchain', 'Green Technology'],
+        'partner': ['Innovation', 'Strategic Partnerships', 'Investment', 'Market Expansion']
+    }
+    return interests.get(user_type, ['Maritime', 'Innovation'])
+
+def calculate_mock_compatibility(user, profile):
+    """Calculate a mock compatibility score"""
+    base_score = 75
+    
+    # User type compatibility
+    if user['user_type'] == 'visitor' and profile['user_type'] in ['exhibitor', 'partner']:
+        base_score += 15
+    elif user['user_type'] in ['exhibitor', 'partner'] and profile['user_type'] == 'visitor':
+        base_score += 15
+    
+    # Random variation
+    import random
+    variation = random.randint(-10, 20)
+    
+    return min(100, max(60, base_score + variation))
+
+def get_business_potential(user_type):
+    potentials = ['Élevé', 'Très élevé', 'Exceptionnel', 'Modéré']
+    import random
+    return random.choice(potentials)
+
+def apply_semantic_search(profiles, query):
+    """Apply semantic search to profiles"""
+    if not query:
+        return profiles
+    
+    query_terms = query.lower().split()
+    scored_profiles = []
+    
+    for profile in profiles:
+        score = 0
+        search_text = f"{profile['description']} {' '.join(profile['interests'])} {profile['sector']}".lower()
+        
+        for term in query_terms:
+            if term in search_text:
+                score += 10
+        
+        if score > 0:
+            profile['semantic_score'] = score
+            scored_profiles.append(profile)
+    
+    return sorted(scored_profiles, key=lambda x: x.get('semantic_score', 0), reverse=True)
+
+def are_compatible_sectors(sector1, sector2):
+    """Check if two sectors are compatible"""
+    compatible_pairs = [
+        ('Gestion Portuaire', 'Technologies Marines'),
+        ('Logistique Maritime', 'Solutions IoT'),
+        ('Innovation Maritime', 'Equipment Portuaire')
+    ]
+    
+    return (sector1, sector2) in compatible_pairs or (sector2, sector1) in compatible_pairs
+
+# =============================================================================
 # AI CHATBOT ENDPOINTS
 # =============================================================================
 
