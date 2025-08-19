@@ -361,9 +361,18 @@ const EnhancedMiniSiteEditor = () => {
               <Eye className="h-4 w-4 mr-2" />
               Aperçu
             </Button>
-            <Button onClick={saveSite} disabled={!hasChanges}>
-              <Save className="h-4 w-4 mr-2" />
-              Sauvegarder
+            <Button onClick={saveSite} disabled={!hasChanges || saving}>
+              {saving ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Sauvegarde...
+                </>
+              ) : (
+                <>
+                  <Save className="h-4 w-4 mr-2" />
+                  Sauvegarder
+                </>
+              )}
             </Button>
           </div>
         </div>
