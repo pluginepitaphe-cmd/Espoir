@@ -1216,6 +1216,7 @@ async def get_public_enhanced_minisite(user_id: int):
         ).fetchone()
         
         if not result:
+            conn.close()
             raise HTTPException(status_code=404, detail="Mini-site non trouvé")
         
         user_data = result
