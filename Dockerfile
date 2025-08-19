@@ -3,7 +3,7 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Variables pour build complet
+# Variables pour build complet (development pour installer devDeps)
 ENV NODE_ENV=development
 ENV YARN_CACHE_FOLDER=/tmp/.yarn-cache
 
