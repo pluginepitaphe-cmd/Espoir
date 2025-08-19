@@ -270,25 +270,37 @@ const EnhancedMiniSiteEditor = () => {
 
   // Sauvegarder les modifications
   const saveSite = async () => {
+    if (!user?.id) return;
+    
     try {
-      // TODO: Intégrer avec l'API backend
-      console.log('Sauvegarde du mini-site enhanced:', siteData);
+      setSaving(true);
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/minisite/enhanced/${user.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(siteData)
+      });
       
-      // Simuler l'appel API
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      if (!response.ok) {
+        throw new Error('Erreur lors de la sauvegarde');
+      }
       
       setHasChanges(false);
       alert('Mini-site sauvegardé avec succès !');
     } catch (error) {
       console.error('Erreur lors de la sauvegarde:', error);
       alert('Erreur lors de la sauvegarde du mini-site');
+    } finally {
+      setSaving(false);
     }
   };
 
   // Prévisualiser le mini-site
   const previewSite = () => {
-    // TODO: Ouvrir l'aperçu avec les données actuelles
-    const exposantId = 'maritime-tech-solutions'; // TODO: utiliser l'ID réel de l'exposant
+    // TODO: Utiliser l'ID réel de l'exposant
+    const exposantId = user?.id || 'maritime-tech-solutions';
     window.open(`/exposants/${exposantId}/enhanced`, '_blank');
   };
 
