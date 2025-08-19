@@ -50,7 +50,7 @@ const WordPressApp = ({ container, component, config }) => {
       user,
       apiConfig: {
         ...apiConfig,
-        apiUrl: apiConfig.apiUrl || 'https://siports-maritime-1.preview.emergentagent.com/api'
+        apiUrl: apiConfig.apiUrl || 'https://react-router-upgrade.preview.emergentagent.com/api'
       }
     };
 
