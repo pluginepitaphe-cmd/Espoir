@@ -318,6 +318,20 @@ const EnhancedMiniSiteEditor = () => {
     { id: 'contact', label: 'Contact', icon: Mail }
   ];
 
+  // Affichage de chargement
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="flex flex-col items-center gap-4">
+            <Loader2 className="h-8 w-8 animate-spin" />
+            <p className="text-muted-foreground">Chargement de votre mini-site...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
       {/* En-tête */}
