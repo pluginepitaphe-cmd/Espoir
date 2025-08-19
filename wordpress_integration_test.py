@@ -10,7 +10,7 @@ import sys
 from datetime import datetime
 
 # Configuration - Using the URL from the existing test files
-BACKEND_URL = "https://siports-deploy.preview.emergentagent.com/api"
+BACKEND_URL = "https://siports-maritime-1.preview.emergentagent.com/api"
 
 # Test credentials as specified in the review request
 WORDPRESS_ADMIN_USER = {
