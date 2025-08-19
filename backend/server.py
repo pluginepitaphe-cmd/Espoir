@@ -1166,7 +1166,7 @@ async def save_enhanced_minisite_data(user_id: int, data: EnhancedMiniSiteData, 
         data_json = json.dumps(data.dict())
         
         conn.execute(
-            'UPDATE users SET enhanced_minisite_data = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+            'UPDATE users SET enhanced_minisite_data = ? WHERE id = ?',
             (data_json, user_id)
         )
         conn.commit()
