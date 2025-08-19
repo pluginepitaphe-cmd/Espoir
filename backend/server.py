@@ -1093,6 +1093,7 @@ async def get_enhanced_minisite_data(user_id: int, user: dict = Depends(get_curr
         if not result:
             conn.close()
             raise HTTPException(status_code=404, detail="Utilisateur non trouvé")
+        if result and result['enhanced_minisite_data']:
             data = json.loads(result['enhanced_minisite_data'])
         else:
             # Return default structure if no data exists
