@@ -71,11 +71,18 @@ const ExhibitorDashboard = () => {
       color: 'bg-blue-500'
     },
     {
-      title: 'Personnaliser mon mini-site',
-      description: 'Modifiez votre présentation',
+      title: 'Personnaliser mon mini-site Enhanced',
+      description: 'Éditeur complet et avancé',
       icon: Edit,
-      action: '/mini-site',
+      action: '/mini-site/enhanced',
       color: 'bg-purple-500'
+    },
+    {
+      title: 'Éditeur mini-site basique',
+      description: 'Version simple et rapide',
+      icon: Settings,
+      action: '/mini-site',
+      color: 'bg-blue-500'
     },
     {
       title: 'Gérer mon calendrier',
