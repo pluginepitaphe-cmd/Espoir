@@ -21,6 +21,7 @@ export default defineConfig({
       clientPort: 443
     },
     allowedHosts: [
+      "siports-deploy.preview.emergentagent.com",  // Current deployment URL
       "siports-maritime.preview.emergentagent.com",
       "13099866-a689-4c8e-95cb-27f5e6358db4.preview.emergentagent.com",
       "bugfix-analyse.preview.emergentagent.com",
@@ -30,7 +31,8 @@ export default defineConfig({
       "maritime-events.preview.emergentagent.com",
       "4efe408b-c94a-400d-a866-c80c08ec5c16.preview.emergentagent.com",
       "localhost",
-      "127.0.0.1"
+      "127.0.0.1",
+      "0.0.0.0"
     ]
   }
 })
