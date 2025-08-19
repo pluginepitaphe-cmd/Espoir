@@ -61,6 +61,7 @@ function App() {
               <Route path="/matching" element={<AdvancedMatchingSystem />} />
               <Route path="/matching-ai" element={<IntelligentMatchingSystem />} />
               <Route path="/reseautage-ai" element={<AINetworkingHub />} />
+              <Route path="/matching-demo" element={<MatchingDemo />} />
               
               {/* Routes avec layout */}
               <Route element={<Layout />}>
