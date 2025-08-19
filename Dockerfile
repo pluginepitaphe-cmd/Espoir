@@ -35,3 +35,5 @@ RUN echo 'server { listen 3000; root /usr/share/nginx/html; index index.html; lo
 
 EXPOSE 3000
 CMD ["nginx", "-g", "daemon off;"]
+
+
