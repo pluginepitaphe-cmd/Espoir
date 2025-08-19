@@ -90,7 +90,7 @@ def init_database():
     conn.execute('''
         INSERT OR IGNORE INTO users (email, password_hash, user_type, visitor_package, status, first_name, last_name, company)
         VALUES (?, ?, 'visitor', 'Premium', 'validated', 'Marie', 'Dupont', 'Port Autonome Marseille')
-    ''', ('visitor@example.com', visitor_password))
+    ''', ('visiteur@example.com', visitor_password))
     
     conn.execute('''
         INSERT OR IGNORE INTO users (email, password_hash, user_type, partnership_package, status, first_name, last_name, company)
