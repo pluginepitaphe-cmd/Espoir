@@ -772,8 +772,8 @@ const AINetworkingHub = () => {
                   </div>
                 </div>
               </CardContent>
-            </CardContent>
-          </Card>
+            </Card>
+          </div>
         )}
 
         {/* Modal de profil détaillé */}
