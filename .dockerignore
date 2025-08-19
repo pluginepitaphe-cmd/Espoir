@@ -20,3 +20,13 @@ __pycache__
 # Ignore package-lock.json pour éviter les conflits avec yarn
 package-lock.json
 **/package-lock.json
+
+# Ignore cache et temp files
+.vite-temp
+.cache
+.tmp
+
+# Ignore Dockerfile alternatifs
+Dockerfile.old
+Dockerfile.railway
+Dockerfile.*
