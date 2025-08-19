@@ -1036,6 +1036,246 @@ def are_compatible_sectors(sector1, sector2):
     return (sector1, sector2) in compatible_pairs or (sector2, sector1) in compatible_pairs
 
 # =============================================================================
+# ENHANCED MINI-SITE EDITOR ENDPOINTS
+# =============================================================================
+
+# Models for enhanced mini-site data
+class EnhancedMiniSiteData(BaseModel):
+    # Basic info
+    name: str
+    tagline: str
+    category: str
+    icon: str
+    description: str
+    fullDescription: str
+    location: str
+    phone: str
+    email: str
+    website: str
+    standNumber: str
+    pavilion: str
+    employees: str
+    founded: str
+    revenue: str
+    clientsServed: str
+    logo: Optional[str] = None
+    coverImage: Optional[str] = None
+    
+    # Complex data structures
+    timeline: List[dict] = []
+    team: List[dict] = []
+    values: List[dict] = []
+    certifications: List[dict] = []
+    services: List[dict] = []
+    projects: List[dict] = []
+    news: List[dict] = []
+    gallery: dict = {}
+    contacts: dict = {}
+    social: dict = {}
+
+@app.get("/api/minisite/enhanced/{user_id}")
+async def get_enhanced_minisite_data(user_id: int, user: dict = Depends(get_current_user)):
+    """Get enhanced mini-site data for a user"""
+    try:
+        conn = sqlite3.connect(DATABASE_URL)
+        conn.row_factory = sqlite3.Row
+        
+        # Check if user has permission to access this data
+        if user['id'] != user_id and user['user_type'] != 'admin':
+            raise HTTPException(status_code=403, detail="Accès refusé")
+        
+        # Get the stored mini-site data
+        result = conn.execute(
+            'SELECT enhanced_minisite_data FROM users WHERE id = ?', 
+            (user_id,)
+        ).fetchone()
+        
+        if result and result['enhanced_minisite_data']:
+            data = json.loads(result['enhanced_minisite_data'])
+        else:
+            # Return default structure if no data exists
+            user_data = conn.execute(
+                'SELECT * FROM users WHERE id = ?', (user_id,)
+            ).fetchone()
+            
+            if not user_data:
+                raise HTTPException(status_code=404, detail="Utilisateur non trouvé")
+            
+            data = {
+                "name": user_data['company'] or 'Mon Entreprise',
+                "tagline": 'Révolutionner l\'avenir maritime grâce à l\'innovation technologique',
+                "category": 'Technologie Maritime',
+                "icon": '⚓',
+                "description": 'Solutions technologiques innovantes pour l\'industrie maritime et portuaire.',
+                "fullDescription": 'Description complète de votre entreprise et de ses activités...',
+                "location": 'Votre ville, Pays',
+                "phone": user_data['phone'] or '+33 1 23 45 67 89',
+                "email": user_data['email'],
+                "website": 'www.votre-site.com',
+                "standNumber": 'A-001',
+                "pavilion": 'Pavillon Principal',
+                "employees": '50+',
+                "founded": '2020',
+                "revenue": '€5M+',
+                "clientsServed": '100+ clients satisfaits',
+                "logo": '/images/logo-placeholder.png',
+                "coverImage": '/images/cover-placeholder.jpg',
+                "timeline": [],
+                "team": [],
+                "values": [],
+                "certifications": [],
+                "services": [],
+                "projects": [],
+                "news": [],
+                "gallery": {"products": [], "installations": [], "team": [], "events": []},
+                "contacts": {
+                    "general": {"name": "Accueil général", "email": user_data['email'], "phone": user_data['phone'] or '+33 1 23 45 67 89'},
+                    "sales": {"name": "Commercial", "role": "Directeur Commercial", "email": "sales@exemple.com", "phone": "+33 1 23 45 67 90"},
+                    "support": {"name": "Support Technique", "email": "support@exemple.com", "phone": "+33 1 23 45 67 91"}
+                },
+                "social": {"linkedin": "", "twitter": "", "facebook": "", "youtube": ""}
+            }
+        
+        conn.close()
+        return {"data": data}
+        
+    except Exception as e:
+        logger.error(f"Error getting enhanced minisite data: {str(e)}")
+        raise HTTPException(status_code=500, detail="Erreur lors de la récupération des données")
+
+@app.put("/api/minisite/enhanced/{user_id}")
+async def save_enhanced_minisite_data(user_id: int, data: EnhancedMiniSiteData, user: dict = Depends(get_current_user)):
+    """Save enhanced mini-site data for a user"""
+    try:
+        # Check if user has permission to modify this data
+        if user['id'] != user_id and user['user_type'] != 'admin':
+            raise HTTPException(status_code=403, detail="Accès refusé")
+        
+        conn = sqlite3.connect(DATABASE_URL)
+        
+        # Check if we need to add the column (for backward compatibility)
+        cursor = conn.cursor()
+        cursor.execute("PRAGMA table_info(users)")
+        columns = [column[1] for column in cursor.fetchall()]
+        
+        if 'enhanced_minisite_data' not in columns:
+            # Add the column if it doesn't exist
+            conn.execute('ALTER TABLE users ADD COLUMN enhanced_minisite_data TEXT')
+        
+        # Convert data to JSON and store
+        data_json = json.dumps(data.dict())
+        
+        conn.execute(
+            'UPDATE users SET enhanced_minisite_data = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+            (data_json, user_id)
+        )
+        conn.commit()
+        conn.close()
+        
+        logger.info(f"Enhanced mini-site data saved for user {user_id}")
+        return {"message": "Données du mini-site sauvegardées avec succès"}
+        
+    except Exception as e:
+        logger.error(f"Error saving enhanced minisite data: {str(e)}")
+        raise HTTPException(status_code=500, detail="Erreur lors de la sauvegarde des données")
+
+@app.delete("/api/minisite/enhanced/{user_id}")
+async def delete_enhanced_minisite_data(user_id: int, user: dict = Depends(get_current_user)):
+    """Delete enhanced mini-site data for a user"""
+    try:
+        # Check if user has permission to delete this data
+        if user['id'] != user_id and user['user_type'] != 'admin':
+            raise HTTPException(status_code=403, detail="Accès refusé")
+        
+        conn = sqlite3.connect(DATABASE_URL)
+        conn.execute(
+            'UPDATE users SET enhanced_minisite_data = NULL, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+            (user_id,)
+        )
+        conn.commit()
+        conn.close()
+        
+        logger.info(f"Enhanced mini-site data deleted for user {user_id}")
+        return {"message": "Données du mini-site supprimées avec succès"}
+        
+    except Exception as e:
+        logger.error(f"Error deleting enhanced minisite data: {str(e)}")
+        raise HTTPException(status_code=500, detail="Erreur lors de la suppression des données")
+
+@app.get("/api/minisite/enhanced/{user_id}/public")
+async def get_public_enhanced_minisite(user_id: int):
+    """Get public enhanced mini-site data (no authentication required)"""
+    try:
+        conn = sqlite3.connect(DATABASE_URL)
+        conn.row_factory = sqlite3.Row
+        
+        # Get the stored mini-site data and user info
+        result = conn.execute(
+            '''SELECT users.*, products.id as product_id, products.name as product_name, 
+               products.description as product_description, products.category as product_category,
+               products.price, products.currency, products.images as product_images
+               FROM users 
+               LEFT JOIN products ON users.id = products.user_id
+               WHERE users.id = ? AND users.user_type IN ('exhibitor', 'partner')''', 
+            (user_id,)
+        ).fetchall()
+        
+        if not result:
+            raise HTTPException(status_code=404, detail="Mini-site non trouvé")
+        
+        user_data = result[0]
+        
+        # Get enhanced mini-site data
+        enhanced_data = None
+        if user_data['enhanced_minisite_data']:
+            enhanced_data = json.loads(user_data['enhanced_minisite_data'])
+        
+        # Collect products
+        products = []
+        for row in result:
+            if row['product_id']:
+                product = {
+                    "id": row['product_id'],
+                    "name": row['product_name'],
+                    "description": row['product_description'],
+                    "category": row['product_category'],
+                    "price": f"{row['price']} {row['currency']}" if row['price'] else "Sur devis",
+                    "images": json.loads(row['product_images']) if row['product_images'] else []
+                }
+                if product not in products:
+                    products.append(product)
+        
+        # Build response with enhanced data if available, fallback to basic data
+        if enhanced_data:
+            enhanced_data['products'] = products
+            response_data = enhanced_data
+        else:
+            response_data = {
+                "name": user_data['company'] or user_data['first_name'] + ' ' + user_data['last_name'],
+                "tagline": 'Expert du secteur maritime',
+                "category": 'Professionnel Maritime',
+                "icon": '⚓',
+                "description": user_data['bio'] or 'Professionnel expérimenté dans le secteur maritime.',
+                "email": user_data['email'],
+                "phone": user_data['phone'],
+                "products": products,
+                "contacts": {
+                    "general": {
+                        "name": f"{user_data['first_name']} {user_data['last_name']}",
+                        "email": user_data['email'],
+                        "phone": user_data['phone'] or 'Non renseigné'
+                    }
+                }
+            }
+        
+        conn.close()
+        return {"data": response_data}
+        
+    except Exception as e:
+        logger.error(f"Error getting public enhanced minisite: {str(e)}")
+        raise HTTPException(status_code=500, detail="Erreur lors de la récupération du mini-site")
+
+# =============================================================================
 # AI CHATBOT ENDPOINTS
 # =============================================================================
 
