@@ -20,9 +20,46 @@ const EnhancedMiniSiteEditor = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [hasChanges, setHasChanges] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   
   // State pour les données du mini-site enhanced
-  const [siteData, setSiteData] = useState({
+  const [siteData, setSiteData] = useState({});
+
+  const [activeTab, setActiveTab] = useState('general');
+
+  // Charger les données depuis l'API
+  useEffect(() => {
+    loadMiniSiteData();
+  }, [user]);
+
+  const loadMiniSiteData = async () => {
+    if (!user?.id) return;
+    
+    try {
+      setLoading(true);
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/minisite/enhanced/${user.id}`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Erreur lors du chargement des données');
+      }
+      
+      const result = await response.json();
+      setSiteData(result.data);
+    } catch (error) {
+      console.error('Erreur lors du chargement:', error);
+      // En cas d'erreur, utiliser les données par défaut
+      setSiteData(getDefaultSiteData());
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getDefaultSiteData = () => ({
     // Informations de base
     name: user?.company || 'Mon Entreprise',
     tagline: 'Révolutionner l\'avenir maritime grâce à l\'innovation technologique',
@@ -169,8 +206,6 @@ const EnhancedMiniSiteEditor = () => {
       youtube: ''
     }
   });
-
-  const [activeTab, setActiveTab] = useState('general');
 
   // Fonction pour mettre à jour les données
   const updateSiteData = (section, field, value) => {
