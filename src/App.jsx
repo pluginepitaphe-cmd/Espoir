@@ -17,6 +17,7 @@ import PartnershipPackagesPage from './pages/PartnershipPackagesPage';
 import AdvancedMatchingSystem from './pages/AdvancedMatchingSystem';
 import IntelligentMatchingSystem from './pages/IntelligentMatchingSystem';
 import AINetworkingHub from './pages/AINetworkingHub';
+import MatchingDemo from './pages/MatchingDemo';
 import ExhibitorDashboard from './pages/ExhibitorDashboard';
 import DashboardPage from './pages/DashboardPage';
 import ProductManagement from './pages/ProductManagement';
