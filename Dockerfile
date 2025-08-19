@@ -1,45 +1,39 @@
-# 🚀 DOCKERFILE FINAL SIPORTS - SYNTAXE YARN CORRECTE
-FROM node:20-alpine
+# 🚀 DOCKERFILE FINAL (corrigé) — Substitution du PORT au runtime
 
+# Étape de build
+FROM node:20-alpine AS build
 WORKDIR /app
 
-# NODE_ENV=development pour installer devDependencies automatiquement
+# Installer les dépendances (dev inclus pour le build)
 ENV NODE_ENV=development
-
-# Copier package.json et yarn.lock
 COPY package.json yarn.lock ./
-
-# Installation simple sans options compliquées
 RUN rm -f package-lock.json && yarn install --network-timeout 300000
 
-# Vérifier installation
+# Vérification
 RUN ls node_modules/@vitejs/plugin-react/package.json && echo "✅ @vitejs/plugin-react installé"
 
-# Copier le code source
+# Copier le code et builder
 COPY . .
-
-# Build avec NODE_ENV=production pour optimisation
 ENV NODE_ENV=production
 RUN yarn build
-
-# Vérifier que dist/ existe
 RUN ls -la dist/index.html && echo "✅ Build réussi"
 
-# Stage production avec nginx
+# Étape de runtime avec Nginx
 FROM nginx:alpine
 
-# Installer envsubst
+# S'assurer que envsubst est disponible (normalement présent, mais on sécurise)
 RUN apk add --no-cache gettext
 
-COPY --from=0 /app/dist /usr/share/nginx/html
+# Copier le build
+COPY --from=build /app/dist /usr/share/nginx/html
 
-# Créer un template de configuration Nginx
-COPY nginx.conf.template /etc/nginx/conf.d/default.conf.template
+# Déposer le template Nginx à l'endroit attendu par l'entrypoint
+COPY nginx.conf.template /etc/nginx/templates/default.conf.template
 
-# Utiliser envsubst pour remplacer la variable PORT
-RUN envsubst '${PORT}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf
+# Générer la config au runtime avec un PORT par défaut (3000) puis lancer Nginx
+CMD ["/bin/sh", "-c", ": ${PORT:=3000}; envsubst < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"]
 
-EXPOSE ${PORT}
-CMD ["nginx", "-g", "daemon off;"]
+# Port par défaut exposé (indicatif)
+EXPOSE 3000
 
 
