@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "preinstall": "rm -f package-lock.json",
-    "install:safe": "yarn install --network-timeout 300000 --ignore-engines --production=false"
+    "install:safe": "yarn install --network-timeout 300000 --ignore-engines"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
