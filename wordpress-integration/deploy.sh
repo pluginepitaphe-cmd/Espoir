@@ -26,7 +26,7 @@ WP_DB_PASSWORD=""  # À remplir
 
 # URLs
 WORDPRESS_URL="https://siportevent.com"
-SIPORTS_API_URL="https://siports-maritime.preview.emergentagent.com"
+SIPORTS_API_URL="https://siports-deploy.preview.emergentagent.com"
 
 print_header() {
     echo -e "${BLUE}"

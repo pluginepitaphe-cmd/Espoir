@@ -88,7 +88,7 @@ Le chatbot IA SIPORTS v2.0 a été **implémenté avec succès** et est **entiè
 
 ### 🌐 URL de Test Dédiée
 ```
-https://siports-maritime.preview.emergentagent.com/chatbot-test
+https://siports-deploy.preview.emergentagent.com/chatbot-test
 ```
 
 ### 🔘 Utilisation sur Toutes les Pages
