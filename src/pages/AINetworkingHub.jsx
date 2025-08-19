@@ -736,46 +736,44 @@ const AINetworkingHub = () => {
           </div>
         )}
 
-        {/* Autres tabs... */}
+        {/* Suggestions AI */}
         {activeTab === 'ai-suggestions' && (
-          <div>
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Sparkles className="h-5 w-5" />
-                  Suggestions IA Personnalisées
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-12">
-                  <Brain className="w-16 h-16 text-purple-500 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-slate-900 mb-2">
-                    Recommandations Intelligentes
-                  </h3>
-                  <p className="text-slate-600 mb-6">
-                    L'IA analyse en continu votre profil et vos interactions pour vous suggérer les meilleures opportunités de réseautage
-                  </p>
-                  <div className="max-w-2xl mx-auto">
-                    <div className="grid gap-4">
-                      {aiSuggestions.map((suggestion, idx) => {
-                        const Icon = suggestion.icon;
-                        return (
-                          <div key={idx} className="flex items-center gap-4 p-4 bg-slate-50 rounded-lg">
-                            <Icon className="h-8 w-8 text-blue-600" />
-                            <div className="text-left flex-1">
-                              <h4 className="font-semibold">{suggestion.title}</h4>
-                              <p className="text-sm text-slate-600">{suggestion.description}</p>
-                            </div>
-                            <Button size="sm">{suggestion.action}</Button>
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Sparkles className="h-5 w-5" />
+                Suggestions IA Personnalisées
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-center py-12">
+                <Brain className="w-16 h-16 text-purple-500 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-slate-900 mb-2">
+                  Recommandations Intelligentes
+                </h3>
+                <p className="text-slate-600 mb-6">
+                  L'IA analyse en continu votre profil et vos interactions pour vous suggérer les meilleures opportunités de réseautage
+                </p>
+                <div className="max-w-2xl mx-auto">
+                  <div className="grid gap-4">
+                    {aiSuggestions.map((suggestion, idx) => {
+                      const Icon = suggestion.icon;
+                      return (
+                        <div key={idx} className="flex items-center gap-4 p-4 bg-slate-50 rounded-lg">
+                          <Icon className="h-8 w-8 text-blue-600" />
+                          <div className="text-left flex-1">
+                            <h4 className="font-semibold">{suggestion.title}</h4>
+                            <p className="text-sm text-slate-600">{suggestion.description}</p>
                           </div>
-                        );
-                      })}
-                    </div>
+                          <Button size="sm">{suggestion.action}</Button>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
+              </div>
+            </CardContent>
+          </Card>
         )}
 
         {/* Modal de profil détaillé */}
