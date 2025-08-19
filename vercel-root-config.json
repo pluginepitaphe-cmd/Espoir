@@ -1,7 +1,0 @@
-{
-  "version": 2,
-  "buildCommand": "cd /app && yarn build",
-  "outputDirectory": "/app/dist",
-  "installCommand": "cd /app && yarn install --network-timeout 300000",
-  "framework": "vite"
-}
