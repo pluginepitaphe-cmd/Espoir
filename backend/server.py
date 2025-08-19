@@ -218,7 +218,8 @@ async def login(user: UserLogin):
         if not db_user or not check_password_hash(db_user['password_hash'], user.password):
             raise HTTPException(status_code=401, detail="Identifiants invalides")
         
-        if db_user['status'] != 'validated':
+        # Allow admin login regardless of status, others must be validated
+        if db_user['user_type'] != 'admin' and db_user['status'] != 'validated':
             raise HTTPException(status_code=403, detail="Compte en attente de validation")
         
         # Create JWT token
