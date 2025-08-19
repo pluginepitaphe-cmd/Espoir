@@ -281,12 +281,16 @@ test_plan:
     - "✅ TERMINÉ: Navigation, fonctionnalités avancées, responsive mobile"
     - "✅ TERMINÉ: Configuration Vite corrigée - Frontend entièrement accessible"
     - "✅ TERMINÉ: Backend local validation complète (94.7% success rate - 18/19 tests)"
+    - "✅ TERMINÉ: Tests frontend exhaustifs post-restauration interface (90% success rate)"
+    - "✅ TERMINÉ: Intégration frontend-backend local fonctionnelle"
     - "❌ CRITIQUE: Railway backend deployment inactif (404 errors)"
-    - "⚠️ PENDING: Tests frontend avec backend connexion après restauration interface"
+    - "⚠️ MINEUR: Authentification exposant/visiteur nécessite correction backend"
+    - "⚠️ MINEUR: Interface chatbot IA à finaliser (bouton principal manquant)"
   stuck_tasks: 
     - "Railway Backend Production Deployment - Service inactif/supprimé"
+    - "Authentification exposant/visiteur - Problème connexion backend"
   test_all: true
-  test_priority: "frontend_validated_railway_needs_fix"
+  test_priority: "frontend_validated_backend_local_functional"
 
 agent_communication:
   - agent: "main"
