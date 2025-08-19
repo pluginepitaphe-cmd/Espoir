@@ -1,49 +1,41 @@
-# 🚀 DOCKERFILE UNIVERSEL SIPORTS - ZERO ERREUR GARANTI
+# 🚀 DOCKERFILE SIPORTS - ANTI --frozen-lockfile GARANTI
 FROM node:20-alpine
 
 WORKDIR /app
 
-# Supprimer les conflits potentiels
-RUN rm -f package-lock.json
+# Installer bash pour les scripts
+RUN apk add --no-cache bash
 
-# Copier les fichiers de configuration
-COPY package.json ./
+# Variables d'environnement
+ENV NODE_ENV=production
+ENV YARN_CACHE_FOLDER=/tmp/.yarn-cache
+
+# Copier la config yarn AVANT package.json
+COPY .yarnrc.yml ./
 COPY .yarnrc ./
 
-# Copier yarn.lock s'il existe, sinon on le créera
-COPY yarn.loc[k] ./ || echo "yarn.lock sera créé"
+# Script de nettoyage et installation sécurisée
+RUN echo '#!/bin/bash\nrm -f package-lock.json\nyarn install --network-timeout 300000 --ignore-engines' > /install.sh && chmod +x /install.sh
 
-# Installation ultra robuste avec fallback
-RUN yarn install --network-timeout 300000 --no-frozen-lockfile || \
-    (rm -f yarn.lock && yarn install --network-timeout 300000)
+# Copier package.json
+COPY package.json ./
+
+# Installation ultra-sécurisée avec fallback
+RUN /install.sh || (rm -f yarn.lock && yarn install --network-timeout 300000)
 
 # Copier le code source
 COPY . .
 
-# Build optimisé
-ENV NODE_ENV=production
+# Build optimisé  
 RUN yarn build
 
-# Stage de production avec nginx
+# Stage de production
 FROM nginx:alpine
 
-# Copier les fichiers buildés
 COPY --from=0 /app/dist /usr/share/nginx/html
 
-# Configuration nginx optimisée pour SPA
-RUN echo 'server { \
-    listen 3000; \
-    root /usr/share/nginx/html; \
-    index index.html; \
-    location / { \
-        try_files $uri $uri/ /index.html; \
-    } \
-    location /assets/ { \
-        expires 1y; \
-        add_header Cache-Control "public, immutable"; \
-    } \
-}' > /etc/nginx/conf.d/default.conf
+# Configuration nginx pour SPA
+RUN echo 'server { listen 3000; root /usr/share/nginx/html; index index.html; location / { try_files $uri $uri/ /index.html; } }' > /etc/nginx/conf.d/default.conf
 
 EXPOSE 3000
-
 CMD ["nginx", "-g", "daemon off;"]
