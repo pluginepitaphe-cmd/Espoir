@@ -1189,7 +1189,7 @@ async def delete_enhanced_minisite_data(user_id: int, user: dict = Depends(get_c
         
         conn = sqlite3.connect(DATABASE_URL)
         conn.execute(
-            'UPDATE users SET enhanced_minisite_data = NULL, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+            'UPDATE users SET enhanced_minisite_data = NULL WHERE id = ?',
             (user_id,)
         )
         conn.commit()
