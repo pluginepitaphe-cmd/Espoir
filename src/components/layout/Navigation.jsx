@@ -12,7 +12,10 @@ import {
   Calendar,
   MessageSquare,
   Home,
-  Handshake
+  Handshake,
+  Brain,
+  Network,
+  Target
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import {
