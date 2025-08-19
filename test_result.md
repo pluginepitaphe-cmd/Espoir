@@ -277,12 +277,14 @@ test_plan:
     - "✅ TERMINÉ: Chatbot IA v2.0 avec 6 endpoints fonctionnels"
     - "✅ TERMINÉ: Authentification multi-rôles et admin dashboard"
     - "✅ TERMINÉ: Forfaits visiteur et partenaires complets"
+    - "✅ TERMINÉ: Tests exhaustifs frontend SIPORTS (95% opérationnel)"
+    - "✅ TERMINÉ: Navigation, fonctionnalités avancées, responsive mobile"
     - "❌ CRITIQUE: Railway backend deployment inactif (404 errors)"
     - "Redéploiement Railway ou utilisation backend local pour production"
   stuck_tasks: 
     - "Railway Backend Production Deployment - Service inactif/supprimé"
   test_all: true
-  test_priority: "backend_local_validated_railway_needs_fix"
+  test_priority: "frontend_validated_railway_needs_fix"
 
 agent_communication:
   - agent: "main"
