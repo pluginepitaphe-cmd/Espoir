@@ -47,7 +47,9 @@ function App() {
               {/* Routes sans layout pour l'authentification */}
               <Route path="/connexion" element={<LoginPage />} />
               <Route path="/inscription" element={<RegisterPage />} />
-              <Route path="/exposants/:id" element={<ExhibitorProfilePage />} />
+              <Route path="/exposants/:id" element={<ExhibitorMiniSite />} />
+              <Route path="/exposants/:id/enhanced" element={<EnhancedExhibitorMiniSite />} />
+              <Route path="/exposant/:id" element={<ExhibitorProfilePage />} />
               <Route path="/exposant/:id/premium" element={<ExhibitorProfilePremium />} />
               <Route path="/exposant/:id/mini-site" element={<ExhibitorMiniSitePro />} />
               
