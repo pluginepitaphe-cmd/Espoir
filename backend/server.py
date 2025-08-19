@@ -1211,14 +1211,9 @@ async def get_public_enhanced_minisite(user_id: int):
         
         # Get the stored mini-site data and user info
         result = conn.execute(
-            '''SELECT users.*, products.id as product_id, products.name as product_name, 
-               products.description as product_description, products.category as product_category,
-               products.price, products.currency, products.images as product_images
-               FROM users 
-               LEFT JOIN products ON users.id = products.user_id
-               WHERE users.id = ? AND users.user_type IN ('exhibitor', 'partner')''', 
+            '''SELECT * FROM users WHERE id = ? AND user_type IN ('exhibitor', 'partner')''', 
             (user_id,)
-        ).fetchall()
+        ).fetchone()
         
         if not result:
             raise HTTPException(status_code=404, detail="Mini-site non trouvé")
