@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-SIPORTS v2.0 - Production Backend
+SIPORTS v2.0 - Production Backend for Railway
 FastAPI + SQLite + AI Chatbot
-Optimisé pour Railway deployment
+Optimisé pour Railway deployment avec corrections
 """
 
 import os
@@ -30,8 +30,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Configuration
-JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY', secrets.token_hex(32))
-DATABASE_URL = os.environ.get('DATABASE_URL', 'instance/siports_production.db')
+JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY', 'siports-jwt-secret-key-2024-production')
+DATABASE_URL = os.environ.get('DATABASE_URL', 'siports_production.db')
 
 # FastAPI app
 app = FastAPI(
@@ -55,7 +55,6 @@ security = HTTPBearer()
 # Database initialization
 def init_database():
     """Initialize production database"""
-    os.makedirs('instance', exist_ok=True)
     conn = sqlite3.connect(DATABASE_URL)
     
     # Users table
@@ -83,7 +82,7 @@ def init_database():
         VALUES (?, ?, 'admin', 'validated', 'Admin', 'SIPORTS')
     ''', ('admin@siportevent.com', admin_password))
     
-    # Sample data
+    # Sample data with correct passwords
     visitor_password = generate_password_hash('visit123')
     exhibitor_password = generate_password_hash('exhibitor123')
     
