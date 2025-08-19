@@ -26,6 +26,7 @@ import MiniSitePreview from './pages/MiniSitePreview';
 import AppointmentCalendar from './pages/AppointmentCalendar';
 import ExhibitorDirectory from './pages/ExhibitorDirectory';
 import ExhibitorMiniSite from './pages/ExhibitorMiniSite';
+import EnhancedExhibitorMiniSite from './pages/EnhancedExhibitorMiniSite';
 import ExhibitorProfilePage from './pages/ExhibitorProfilePage';
 import ExhibitorProfilePremium from './pages/ExhibitorProfilePremium';
 import ExhibitorMiniSitePro from './pages/ExhibitorMiniSitePro';
