@@ -1255,7 +1255,7 @@ async def get_public_enhanced_minisite(user_id: int):
                 "tagline": 'Expert du secteur maritime',
                 "category": 'Professionnel Maritime',
                 "icon": '⚓',
-                "description": user_data['bio'] or 'Professionnel expérimenté dans le secteur maritime.',
+                "description": 'Professionnel expérimenté dans le secteur maritime.',
                 "email": user_data['email'],
                 "phone": user_data['phone'],
                 "products": products,
