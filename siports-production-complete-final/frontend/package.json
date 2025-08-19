@@ -1,0 +1,27 @@
+{
+  "name": "siports-frontend-production",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-router-dom": "6.8.1",
+    "axios": "1.3.4",
+    "recharts": "2.5.0",
+    "lucide-react": "0.263.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "3.1.0",
+    "vite": "4.1.4"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}
