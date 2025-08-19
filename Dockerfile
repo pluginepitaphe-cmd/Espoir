@@ -15,7 +15,7 @@ COPY .yarnrc.yml ./
 COPY .yarnrc ./
 
 # Script de nettoyage et installation sécurisée
-RUN echo '#!/bin/bash\nrm -f package-lock.json\nyarn install --network-timeout 300000 --ignore-engines' > /install.sh && chmod +x /install.sh
+RUN echo '#!/bin/bash\nrm -f package-lock.json\nyarn install --network-timeout 300000 --ignore-engines --production=false' > /install.sh && chmod +x /install.sh
 
 # Copier package.json
 COPY package.json ./
