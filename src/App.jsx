@@ -57,6 +57,7 @@ function App() {
               <Route path="/forfaits-visiteur" element={<VisitorPackagesPage />} />
               <Route path="/partenaires/forfaits" element={<PartnershipPackagesPage />} />
               <Route path="/matching" element={<AdvancedMatchingSystem />} />
+              <Route path="/matching-ai" element={<IntelligentMatchingSystem />} />
               
               {/* Routes avec layout */}
               <Route element={<Layout />}>
