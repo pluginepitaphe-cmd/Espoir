@@ -28,11 +28,16 @@ RUN ls -la dist/index.html && echo "✅ Build réussi"
 # Stage production avec nginx
 FROM nginx:alpine
 
+# Installer envsubst
+RUN apk add --no-cache gettext
+
 COPY --from=0 /app/dist /usr/share/nginx/html
 
-# Config nginx simple pour SPA
-RUN echo 'server { listen ${PORT}; root /usr/share/nginx/html; index index.html; location / { try_files $uri $uri/ /index.html; } }' > /etc/nginx/conf.d/default.conf
+# Créer un template de configuration Nginx
+COPY nginx.conf.template /etc/nginx/conf.d/default.conf.template
 
+# Utiliser envsubst pour remplacer la variable PORT
+RUN envsubst '${PORT}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf
 
 EXPOSE ${PORT}
 CMD ["nginx", "-g", "daemon off;"]
