@@ -272,16 +272,17 @@ metadata:
 
 test_plan:
   current_focus:
-    - "✅ TERMINÉ: Mini-site exposants professionnel style siportevent.com"
-    - "✅ TERMINÉ: Tests backend API complets (95% fonctionnel)"
-    - "✅ TERMINÉ: Intégration frontend-backend mini-sites"
-    - "✅ TERMINÉ: Connexion frontend-Railway backend"
-    - "✅ TERMINÉ: Tests Railway backend PostgreSQL"
-    - "✅ TERMINÉ: Tests Railway backend complets (84.2% success rate)"
-    - "Optimisation et améliorations mineures"
-  stuck_tasks: []
+    - "✅ TERMINÉ: Tests exhaustifs backend SIPORTS production (100% success rate)"
+    - "✅ TERMINÉ: Validation complète fonctionnalités backend local"
+    - "✅ TERMINÉ: Chatbot IA v2.0 avec 6 endpoints fonctionnels"
+    - "✅ TERMINÉ: Authentification multi-rôles et admin dashboard"
+    - "✅ TERMINÉ: Forfaits visiteur et partenaires complets"
+    - "❌ CRITIQUE: Railway backend deployment inactif (404 errors)"
+    - "Redéploiement Railway ou utilisation backend local pour production"
+  stuck_tasks: 
+    - "Railway Backend Production Deployment - Service inactif/supprimé"
   test_all: true
-  test_priority: "railway_backend_validated"
+  test_priority: "backend_local_validated_railway_needs_fix"
 
 agent_communication:
   - agent: "main"
