@@ -1219,11 +1219,11 @@ async def get_public_enhanced_minisite(user_id: int):
             conn.close()
             raise HTTPException(status_code=404, detail="Mini-site non trouvé")
         
-        user_data = result
+        user_data = dict(result)
         
         # Get enhanced mini-site data
         enhanced_data = None
-        if user_data['enhanced_minisite_data']:
+        if user_data.get('enhanced_minisite_data'):
             enhanced_data = json.loads(user_data['enhanced_minisite_data'])
         
         # Mock products for demonstration (in production, this would come from a products table)
