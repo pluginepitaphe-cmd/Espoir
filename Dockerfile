@@ -16,7 +16,7 @@ COPY yarn.lock ./
 
 # Installation COMPLÈTE avec devDependencies
 RUN rm -f package-lock.json && \
-    yarn install --frozen-lockfile=false --network-timeout 300000 --production=false
+    yarn install --network-timeout 300000
 
 # Vérifier que les packages sont installés
 RUN ls -la node_modules/@vitejs/ || echo "ERREUR: @vitejs manquant"
