@@ -1219,9 +1219,9 @@ async def get_public_enhanced_minisite(user_id: int):
         ).fetchone()
         
         if not result:
-            conn.close()
             # Check if user exists but is not exhibitor/partner
             user_check = conn.execute('SELECT user_type FROM users WHERE id = ?', (user_id,)).fetchone()
+            conn.close()
             if user_check:
                 raise HTTPException(status_code=404, detail="Mini-site non disponible pour ce type d'utilisateur")
             else:
