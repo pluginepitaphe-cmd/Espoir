@@ -120,6 +120,33 @@ backend:
         agent: "main"
         comment: "API testée avec succès - endpoints login, register, analytics fonctionnels"
 
+  - task: "Fix JSX syntax errors in AI networking pages"
+    implemented: true
+    working: true
+    file: "/app/src/pages/AINetworkingHub.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "main"
+        comment: "JSX syntax errors detected in AINetworkingHub.jsx causing build failures"
+      - working: true
+        agent: "main"
+        comment: "Fixed JSX structure issues by wrapping Card components in proper div containers. Build now successful."
+
+  - task: "Enhanced Exhibitor Mini-Site Implementation"
+    implemented: true
+    working: true
+    file: "/app/src/pages/EnhancedExhibitorMiniSite.jsx"
+    stuck_count: 0
+    priority: "high"  
+    needs_retesting: true
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Created comprehensive enhanced mini-site with all features from document: Hero section, timeline, team profiles, product catalog with filtering, contact forms, gallery, news, values & commitments, certifications. Route added to /exposants/:id/enhanced"
+
   - task: "Base de données SQLite avec données de test"
     implemented: true
     working: true
